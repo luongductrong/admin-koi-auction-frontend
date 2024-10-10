@@ -9,14 +9,15 @@ const { Option } = Select;
 
 const User = () => {
   const [users, setUsers] = useState([]);
-
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false); // Thêm state này để quản lý modal
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentName, setCurrentName] = useState('');
   const [currentRole, setCurrentRole] = useState(null);
   const [newRole, setNewRole] = useState(null);
+
+  // Lấy token từ local storage
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,8 +26,7 @@ const User = () => {
           'https://koi-auction-backend-dwe7hvbuhsdtgafe.southeastasia-01.azurewebsites.net/api/admin-manager/users/getAll',
           {
             headers: {
-              Authorization:
-                'Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImFkbWluMSIsImlhdCI6MTcyODM3MjM1MSwiZXhwIjoxNzI4Mzc4ODMxfQ.uJYy-uQwNFrLwmkzf2uMHkTOnKGZs59ETRlkMJJJVIhVVAAeEmFEPZ4gSo_3Tic8',
+              Authorization: `Bearer ${token}`, // Sử dụng token từ local storage
               accept: '*/*',
             },
           },
@@ -38,7 +38,7 @@ const User = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [token]);
 
   const handleUpdate = (record) => {
     setCurrentUserId(record.id);
@@ -46,6 +46,8 @@ const User = () => {
     setNewRole(null);
     setIsModalVisible(true);
   };
+
+  const handleCancelUpdate = () => {};
 
   const handleSubmitUpdate = async () => {
     try {
@@ -55,8 +57,7 @@ const User = () => {
           { role: newRole },
           {
             headers: {
-              Authorization:
-                'Bearer eyJhbGciOiJIUzM4NCJ9.eyJ1c2VySWQiOjEsInN1YiI6ImFkbWluMSIsImlhdCI6MTcyODMzMzM2NSwiZXhwIjoxNzI4MzM5ODQ1fQ.1RcLWGZCZyFIRLT-oW7abUeu-Q_Vdb1tTXX0voNYVxcJo-W4muQQCsvilClPGlMV',
+              Authorization: `Bearer ${token}`, // Sử dụng token từ local storage
             },
           },
         );
@@ -64,7 +65,7 @@ const User = () => {
           message: 'Success',
           description: `User role updated to ${newRole}`,
         });
-        setIsModalVisible(false); // Close modal after success
+        setIsModalVisible(false); // Đóng modal sau khi thành công
       } else {
         notification.error({
           message: 'Error',
@@ -79,10 +80,6 @@ const User = () => {
     }
   };
 
-  const handleCancelUpdate = () => {
-    setIsModalVisible(false);
-  };
-
   const handleRemove = (user) => {
     setCurrentUserId(user.id);
     setCurrentName(user.fullName);
@@ -95,6 +92,11 @@ const User = () => {
         `https://koi-auction-backend-dwe7hvbuhsdtgafe.southeastasia-01.azurewebsites.net/api/admin-manager/users/ban-user/${currentUserId}`,
         {
           status: 'Banned',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Sử dụng token từ local storage
+          },
         },
       );
       notification.success({

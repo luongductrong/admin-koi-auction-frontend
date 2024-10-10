@@ -21,7 +21,11 @@ import { AuthProvider, useAuth } from '../auth/AuthProvider'; // Import AuthProv
 
 // PrivateRoute để kiểm tra xác thực
 const PrivateRoute = ({ element }) => {
-  const { isAuthenticated } = useAuth(); // Hàm kiểm tra xác thực từ AuthProvider
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>; // Hiển thị trong quá trình kiểm tra token
+  }
 
   return isAuthenticated ? element : <Navigate to="/login" />;
 };
@@ -35,6 +39,7 @@ const AppRoutes = () => {
       {/* Require-auth put here*/}
       <Route element={<DefaultLayout />}>
         <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
+        <Route path="/chart" element={<PrivateRoute element={<Chart />} />} />
         <Route path="/user" element={<PrivateRoute element={<User />} />} />
         <Route path="/setting" element={<PrivateRoute element={<Setting />} />} />
         <Route path="/task" element={<PrivateRoute element={<Task />} />} />
@@ -47,7 +52,6 @@ const AppRoutes = () => {
         <Route path="/rule" element={<PrivateRoute element={<Rule />} />} />
         <Route path="/requirement" element={<PrivateRoute element={<Requirement />} />} />
       </Route>
-
       {/* Route cho layout khác */}
       <Route
         path="/another"
@@ -62,8 +66,7 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Mặc định chuyển hướng đến login nếu không có route */}
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<PrivateRoute element={<Navigate to="/" />} />} />
     </Routes>
   );
 };

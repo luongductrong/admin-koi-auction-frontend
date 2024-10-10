@@ -7,29 +7,7 @@ const AuthContext = createContext();
 // Tạo Provider để bao bọc ứng dụng
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Giả sử có API để kiểm tra token hợp lệ
-      axios
-        .post('API check xem token còn hạn sử dụng không(nâng cao)', { token })
-        .then((response) => {
-          if (response.data.valid) {
-            setIsAuthenticated(true);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          } else {
-            // Xóa token nếu không hợp lệ
-            localStorage.removeItem('token');
-            setIsAuthenticated(false);
-          }
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          setIsAuthenticated(false);
-        });
-    }
-  }, []);
+  const [loading, setLoading] = useState(true); // Trạng thái tạm trong khi kiểm tra xác thực
 
   const login = (token) => {
     localStorage.setItem('token', token);
@@ -38,20 +16,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
     delete axios.defaults.headers.common['Authorization'];
   };
 
   // Kiểm tra token trong localStorage khi khởi động ứng dụng
-  React.useEffect(() => {
-    const token = localStorage.getItem('authToken');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
     if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setIsAuthenticated(true);
     }
+    setLoading(false);
   }, []);
 
-  return <AuthContext.Provider value={{ isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isAuthenticated, login, logout, loading }}>{children}</AuthContext.Provider>;
 };
 
 // Tạo hook để sử dụng AuthContext
