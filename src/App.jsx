@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './routes';
-import { AuthProvider } from './auth/AuthProvider'; // Đảm bảo rằng bạn đã import AuthProvider
+import { AuthProvider } from './auth/AuthProvider';
 
 function App() {
   return (

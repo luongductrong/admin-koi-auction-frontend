@@ -1,8 +1,8 @@
 import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { useAuth } from '../../../../auth/AuthProvider'; // Assuming this is where AuthProvider is
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../auth/AuthProvider';
 
 import {
   faHome,

@@ -17,7 +17,7 @@ import Request from '../pages/Request';
 import Blog from '../pages/Blog';
 import Requirement from '../pages/Requirement';
 import Rule from '../pages/Rule';
-import { AuthProvider, useAuth } from '../auth/AuthProvider'; // Import AuthProvider
+import { AuthProvider, useAuth } from '../auth/AuthProvider';
 
 // PrivateRoute để kiểm tra xác thực
 const PrivateRoute = ({ element }) => {
