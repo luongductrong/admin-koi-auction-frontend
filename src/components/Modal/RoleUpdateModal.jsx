@@ -27,7 +27,8 @@ const RoleUpdateModal = ({ visible, currentRole, newRole, setNewRole, onSubmit, 
         >
           <Option value="User">User</Option>
           <Option value="Admin">Admin</Option>
-          <Option value="Moderator">Moderator</Option>
+          <Option value="Staff">Staff</Option>
+          <Option value="Breeder">Breeder</Option>
         </Select>
       </div>
     </Modal>

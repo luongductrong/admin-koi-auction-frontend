@@ -21,12 +21,21 @@ const Login = () => {
       // Kiểm tra xem token có tồn tại không
       if (response.data && response.data.token) {
         const token = response.data.token;
+        const role = response.data.role; // Giả sử API trả về role
 
-        // cập nhật trạng thái xác thực
+        // Cập nhật trạng thái xác thực
         login(token);
+        localStorage.setItem('role', role); // Lưu vai trò vào local storage
 
-        // Điều hướng
-        navigate('/');
+        // Điều hướng dựa trên vai trò
+        if (role === 'Admin' || role === 'Staff') {
+          navigate('/'); // Chuyển hướng đến trang chính
+        } else {
+          notification.error({
+            message: 'Access Denied',
+            description: 'You do not have permission to access this application.',
+          });
+        }
       } else {
         throw new Error('Token not found in response');
       }
@@ -75,7 +84,7 @@ const Login = () => {
           </a>
         </div>
         <div className="login-banner">
-          <video src="src/assets/tienca.mp4" autoPlay loop muted></video>
+          <video src="src/assets/1234.mp4" autoPlay loop muted></video>
         </div>
       </div>
     </div>
