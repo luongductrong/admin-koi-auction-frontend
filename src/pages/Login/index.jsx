@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
-import './Login.css'; // Tùy chọn nếu bạn muốn thêm CSS riêng
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../auth/AuthProvider';
+import './Login.css';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Sử dụng hook useNavigate
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -15,19 +17,15 @@ const Login = () => {
         'https://koi-auction-backend-dwe7hvbuhsdtgafe.southeastasia-01.azurewebsites.net/api/security/login',
         values,
       );
-  
+
       // Kiểm tra xem token có tồn tại không
       if (response.data && response.data.token) {
         const token = response.data.token;
-        console.log('Token: ' + token);
-  
-        // Lưu token (localStorage hoặc state quản lý)
-        // localStorage.setItem('token', token);
-  
-        // Thiết lập token vào axios headers cho tất cả các request sau
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
-        // Điều hướng tới trang chính
+
+        // cập nhật trạng thái xác thực
+        login(token);
+
+        // Điều hướng
         navigate('/');
       } else {
         throw new Error('Token not found in response');
@@ -48,24 +46,38 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   return (
     <div className="login-container">
-      <h2>Admin Login</h2>
-      <Form name="login" onFinish={onFinish}>
-        <Form.Item name="userName" rules={[{ required: true, message: 'Please input your username!' }]}>
-          <Input placeholder="Username" />
-        </Form.Item>
-        <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
-          <Input.Password placeholder="Password" />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Login
-          </Button>
-        </Form.Item>
-      </Form>
+      <div className="login-box">
+        <div className="login-form">
+          <div className="login-logo">
+            <img src="/logo.png" alt="Logo" />
+          </div>
+          <h1>Sign In Now</h1>
+          <p className="description">Enter your email address and password to access your account.</p>
+          <Form name="login" onFinish={onFinish}>
+            <Form.Item name="userName" rules={[{ required: true, message: 'Please input your username or email!' }]}>
+              <Input placeholder="Enter email or username" />
+            </Form.Item>
+            <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+              <Input.Password placeholder="Enter your password" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" loading={loading}>
+                Sign In
+              </Button>
+            </Form.Item>
+          </Form>
+          <a className="forgot-password" href="/forgot-password">
+            Forgot password?
+          </a>
+        </div>
+        <div className="login-banner">
+          <video src="src/assets/videoLogin.mp4" autoPlay loop muted></video>
+        </div>
+      </div>
     </div>
   );
 };

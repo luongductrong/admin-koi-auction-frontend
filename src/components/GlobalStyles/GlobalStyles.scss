@@ -2,7 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
 :root {
-  --primary: ;
+  --primary-color: #1a73e8; // Thêm màu chủ đạo
+  --secondary-color: #ffffff; // Thêm màu phụ nếu cần
+  --border-radius: 8px;
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -19,4 +22,5 @@ body {
   font-family: 'Fredoka', sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
+  background-color: #f2f2f2;
 }
