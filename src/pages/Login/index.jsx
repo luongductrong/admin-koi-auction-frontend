@@ -75,7 +75,7 @@ const Login = () => {
           </a>
         </div>
         <div className="login-banner">
-          <video src="src/assets/videoLogin.mp4" autoPlay loop muted></video>
+          <video src="src/assets/tienca.mp4" autoPlay loop muted></video>
         </div>
       </div>
     </div>
