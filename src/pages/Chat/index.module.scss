@@ -1,0 +1,161 @@
+.chatContainer {
+  display: flex;
+  height: 85vh;
+  margin: 0 auto;
+}
+
+.contactList {
+  width: 25%;
+  background-color: #fff;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.chatSection {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+}
+
+.search {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--primary-color-hover);
+    border-radius: 5px;
+  }
+}
+
+// .contactAvatar {
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   margin-right: 10px;
+// }
+
+.contactAvatar {
+  flex: 2;
+  width: 100%;
+  max-width: 50px;
+}
+
+.receiverName {
+  flex: 4;
+  margin-left: 10px;
+}
+
+.currentChatHeader {
+  padding: 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.scrollIcon {
+  flex: 0.1;
+  font-size: 25px;
+  transition: color 0.3s ease;
+  color: var(--primary-color);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    color: var(--primary-color-hover);
+  }
+}
+
+.messageList {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+
+  background-image: url('../../assets/a.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.message {
+  display: flex;
+  align-items: flex-end;
+  margin: 10px 0;
+}
+
+.myMessage {
+  justify-content: flex-end;
+}
+
+.otherMessage {
+  justify-content: flex-start;
+}
+
+.messageContent {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 15px;
+  margin: 0 10px;
+}
+
+.myMessage .messageContent {
+  background-color: var(--primary-color);
+  color: white;
+  .messageTime {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.otherMessage .messageContent {
+  background-color: #90cad6;
+  color: black;
+}
+
+.messageTime {
+  font-size: 11px;
+}
+
+.avatar {
+  height: 45px;
+  border-radius: 50%;
+}
+
+.inputContainer {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  display: flex; /* Sử dụng Flexbox để căn chỉnh các phần tử con */
+  align-items: flex-end; /* Căn chỉnh phần tử theo chiều dọc */
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.sendIcon {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--primary-color-hover);
+  }
+}
+
+.currentChatHeader {
+  display: flex;
+  align-items: center;
+}

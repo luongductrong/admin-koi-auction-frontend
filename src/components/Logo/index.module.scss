@@ -1,0 +1,27 @@
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffa500;
+  }
+}
+
+.svgLogo {
+  width: 24px;
+  height: 24px;
+  fill: var(--primary-color);
+}
+
+.textLogo {
+  font-family: 'Righteous', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  margin: 0;
+  line-height: 30px;
+  text-transform: uppercase;
+}

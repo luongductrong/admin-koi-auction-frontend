@@ -1,0 +1,25 @@
+.sider {
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.collapseButton {
+  color: #fff;
+  background-color: var(--primary-color);
+  margin-top: 10px;
+}
+
+.menu {
+  background-color: transparent;
+  border-inline-end: none !important;
+}
+
+.menuItem {
+  border: 2px solid var(--primary-color);
+  font-weight: 550;
+}
+
+.dark {
+  background-color: #1f1f1f;
+  color: #fff;
+}

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, notification, Select } from 'antd';
-import axios from 'axios';
+import { Table, Button, notification } from 'antd';
+import api from '../../configs';
+import userStore from '../../zustand';
 import ConfirmPopup from '../../components/Popup/ConfirmPopup';
-import RoleUpdateModal from '../../components/Modal/RoleUpdateModal';
-import { format } from 'date-fns';
-
-const { Option } = Select;
+import RoleUpdate from '../../components/Modal/RoleUpdate';
 
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -13,25 +11,50 @@ const User = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [currentName, setCurrentName] = useState('');
+  const [currStatus, setCurrStatus] = useState('');
   const [currentRole, setCurrentRole] = useState(null);
   const [newRole, setNewRole] = useState(null);
 
-  // Lấy token từ local storage
-  const token = localStorage.getItem('token');
+  const { user } = userStore();
+  const token = user.token;
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(
-        'https://koi-auction-backend-dwe7hvbuhsdtgafe.southeastasia-01.azurewebsites.net/api/admin-manager/users/getAll',
-      );
-      setUsers(response.data);
+      const response = await api.get('/admin-manager/users/getAll', {
+        requireAuth: true,
+      });
+
+      const formattedUsers = response.data.map((user) => {
+        let formattedAddress = user.address;
+
+        if (formattedAddress) {
+          try {
+            const parsedAddress = JSON.parse(formattedAddress);
+            formattedAddress = `${parsedAddress.province || ''}, ${parsedAddress.district || ''}, ${
+              parsedAddress.ward || ''
+            }, ${parsedAddress.address || ''}`;
+          } catch (error) {
+            console.error('Error parsing address:', error);
+          }
+        }
+
+        return {
+          ...user,
+          address: formattedAddress,
+        };
+      });
+
+      setUsers(formattedUsers);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
   };
 
+  // Gọi fetchUsers khi token thay đổi
   useEffect(() => {
-    fetchUsers();
+    if (token) {
+      fetchUsers();
+    }
   }, [token]);
 
   const handleUpdate = (record) => {
@@ -44,7 +67,6 @@ const User = () => {
   const handleCancelUpdate = () => {
     notification.error({
       message: 'Cancelled',
-      placement: 'topRight',
     });
     setIsModalVisible(false);
   };
@@ -52,20 +74,13 @@ const User = () => {
   const handleSubmitUpdate = async () => {
     try {
       if (newRole) {
-        console.log('newRole', newRole);
-        console.log('before put');
-        console.log('currentUserId: ', currentUserId);
-
-        await axios.put(
-          `https://koi-auction-backend-dwe7hvbuhsdtgafe.southeastasia-01.azurewebsites.net/api/admin-manager/users/update-role/${currentUserId}`,
-          { role: newRole },
-        );
-
+        await api.post(`/admin-manager/users/update-role/${currentUserId}?role=${newRole}`);
         notification.success({
           message: 'Success',
-          // description: `${record.fullName} role updated to ${newRole}`,
+          description: `User role updated to ${newRole}`,
         });
         setIsModalVisible(false);
+        fetchUsers(); // Fetch lại danh sách users sau khi cập nhật
       } else {
         notification.error({
           message: 'Error',
@@ -73,7 +88,6 @@ const User = () => {
         });
       }
     } catch (error) {
-      console.error('Error response:', error.response);
       notification.error({
         message: 'Error',
         description: 'Failed to update user role.',
@@ -81,38 +95,42 @@ const User = () => {
     }
   };
 
-  const handleRemove = (user) => {
+  const handleBan = (user) => {
     setCurrentUserId(user.id);
+    setCurrStatus(user.status);
     setCurrentName(user.fullName);
     setIsPopupVisible(true);
   };
 
-  const handleConfirmRemove = async () => {
+  const handleConfirmBan = async () => {
     try {
-      await axios.post(
-        `https://koi-auction-backend-dwe7hvbuhsdtgafe.southeastasia-01.azurewebsites.net/api/admin-manager/users/ban-user/${currentUserId}`,
-        {
+      if (currStatus === 'Active') {
+        await api.post(`/admin-manager/users/ban-user/${currentUserId}`, {
           status: 'Unactive',
-        },
-      );
-      notification.success({
-        message: 'Success',
-        description: `Removed user: ${currentName} (Id: ${currentUserId})`,
-        placement: 'topRight',
-      });
+        });
+        notification.success({
+          message: 'Success',
+          description: `Banned: ${currentName} (ID: ${currentUserId})`,
+        });
+      } else {
+        await api.post(`/admin-manager/users/active-user/${currentUserId}`, {
+          status: 'Active',
+        });
+        notification.success({
+          message: 'Success',
+          description: `Actived: ${currentName} (ID: ${currentUserId})`,
+        });
+      }
+      fetchUsers();
     } finally {
       setIsPopupVisible(false);
-      fetchUsers();
     }
   };
 
-  const handleCancelRemove = () => {
+  const handleCancelBan = () => {
     notification.error({
       message: 'Cancelled',
-      description: `Cancelled the removal of: ${currentName} (Id: ${currentUserId})`,
-      placement: 'topRight',
     });
-
     setIsPopupVisible(false);
   };
 
@@ -121,17 +139,14 @@ const User = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      align: 'center',
     },
     {
       title: 'Full Name',
       key: 'fullName',
-      render: (text, record) => (
+      render: (text) => (
         <div>
-          <div className="user-name">
-            <b>{record.fullName}</b>
-          </div>
-          <div className="user-email">{record.email}</div>
+          <b>{text.fullName}</b>
+          <div>{text.email}</div>
         </div>
       ),
     },
@@ -139,39 +154,42 @@ const User = () => {
       title: 'Phone',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
-      align: 'center',
     },
     {
       title: 'Address',
-      dataIndex: 'address',
       key: 'address',
-      align: 'center',
+      render: (text) => (
+        <div
+          style={{
+            whiteSpace: 'nowrap', // Giữ text trên cùng 1 dòng
+            overflow: 'hidden', // Ẩn phần text dư thừa
+            textOverflow: 'ellipsis', // Hiển thị dấu chấm 3 chấm khi text bị ẩn
+            maxWidth: '450px',
+          }}
+        >
+          {text.address}
+        </div>
+      ),
     },
     {
       title: 'Create At',
       dataIndex: 'createAt',
       key: 'createAt',
-      align: 'center',
-      render: (text, record) => format(new Date(record.createAt), 'dd/MM/yyyy HH:mm:ss'),
+      render: (text) => new Date(text).toLocaleString(),
     },
     {
       title: 'Update At',
       dataIndex: 'updateAt',
       key: 'updateAt',
-      align: 'center',
-      render: (text, record) => format(new Date(record.updateAt), 'dd/MM/yyyy HH:mm:ss'),
+      render: (text) => new Date(text).toLocaleString(),
     },
     {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
-      align: 'center',
       render: (role) => (
         <div
-          style={{
-            fontWeight: role === 'Admin' ? 'bold' : 'normal',
-            color: role === 'Admin' ? '#001529' : 'inherit',
-          }}
+          style={{ fontWeight: role === 'Admin' ? 'bold' : 'normal', color: role === 'Admin' ? '#001529' : 'inherit' }}
         >
           {role}
         </div>
@@ -181,20 +199,18 @@ const User = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      align: 'center',
       render: (status) => <div style={{ color: status === 'Active' ? 'green' : 'red' }}>{status}</div>,
     },
     {
       title: 'Action',
       key: 'action',
-      align: 'center',
-      render: (text, record) => (
+      render: (text) => (
         <div>
-          <Button onClick={() => handleUpdate(record)} type="primary" size="small">
+          <Button onClick={() => handleUpdate(text)} type="primary">
             Update
           </Button>
-          <Button onClick={() => handleRemove(record)} type="primary" size="small" danger>
-            Delete
+          <Button onClick={() => handleBan(text)} danger>
+            Ban / Active
           </Button>
         </div>
       ),
@@ -203,9 +219,8 @@ const User = () => {
 
   return (
     <div>
-      <h2>User Manager</h2>
       <Table dataSource={users} columns={columns} rowKey="id" />
-      <RoleUpdateModal
+      <RoleUpdate
         visible={isModalVisible}
         currentRole={currentRole}
         newRole={newRole}
@@ -214,14 +229,13 @@ const User = () => {
         onCancel={handleCancelUpdate}
       />
       <ConfirmPopup
-        x
         open={isPopupVisible}
-        onConfirm={handleConfirmRemove}
-        onCancel={handleCancelRemove}
-        title="Please confirm"
-        content={`Are you sure you want to remove user ${currentName}?`}
+        onConfirm={handleConfirmBan}
+        onCancel={handleCancelBan}
+        content={currStatus === 'Active' ? `Ban ${currentName}?` : `Active ${currentName}?`}
       />
     </div>
   );
 };
+
 export default User;

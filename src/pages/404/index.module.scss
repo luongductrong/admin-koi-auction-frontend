@@ -1,0 +1,13 @@
+.container {
+  display: flex; // Sử dụng flexbox để căn giữa
+  justify-content: center; // Căn giữa theo chiều ngang
+  align-items: center; // Căn giữa theo chiều dọc
+  height: 100vh; // Chiều cao 100% viewport
+  overflow: hidden; // Ẩn phần nội dung tràn ra ngoài
+}
+
+.image {
+  width: 100%; // Chiều rộng 100%
+  height: auto; // Chiều cao tự động để giữ tỉ lệ
+  max-height: 100%; // Chiều cao tối đa là 100% viewport
+}

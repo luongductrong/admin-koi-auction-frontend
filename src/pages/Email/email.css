@@ -1,0 +1,47 @@
+.email-subject {
+  font-weight: bold;
+  color: #333;
+}
+
+.email-sender {
+  color: #666;
+}
+
+.email-time {
+  color: #999;
+}
+
+.email-details {
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background: #f9f9f9;
+}
+
+.email-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.compose-email {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background: #f9f9f9;
+}
+
+.compose-email textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.compose-email input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.compose-email button {
+  float: right;
+}
