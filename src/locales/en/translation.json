@@ -1,0 +1,60 @@
+{
+  "componnent": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "management": "Management",
+      "requests": "Requests",
+      "auctions": "Auctions",
+      "transactions": "Transactions",
+      "users": "Users",
+      "services": "Services",
+      "chat": "Chat",
+      "email": "Email",
+      "blogs": "Blogs",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "header": {
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "breadcumb": {},
+    "modal": {},
+    "popover": {},
+    "popup": {},
+    "tooltip": {}
+  },
+  "page": {
+    "profile": {
+      "full_name": "Full Name",
+      "username": "Username",
+      "phone": "Phone Number",
+      "email": "Email",
+      "province": "Province",
+      "district": "District",
+      "ward": "Ward",
+      "specific_address": "Specific Address",
+      "role": "Role",
+      "email_address": "Email Address",
+      "created_at": "Created At",
+      "save_changes": "Save Changes",
+      "loading": "Loading...",
+      "select_province": "Select Province",
+      "select_district": "Select District",
+      "select_ward": "Select Ward",
+      "update_success": "Update Successful",
+      "profile_update_success": "Your profile has been updated successfully.",
+      "update_failed": "Update Failed",
+      "profile_update_error": "An error occurred while updating your profile. Please try again."
+    },
+    "dashboard": {},
+    "requests": {},
+    "auctions": {},
+    "transactions": {},
+    "users": {},
+    "chat": {},
+    "email": {},
+    "blogs": {},
+    "settings": {}
+  }
+}

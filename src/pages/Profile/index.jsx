@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Input, Select, notification } from 'antd';
 import styles from './index.module.scss';
 import api from '../../configs';
+import { useTranslation } from 'react-i18next';
 import { addressApi } from '../../configs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +10,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 const { Option } = Select;
 
 const Profile = () => {
+  const { t } = useTranslation();
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [editableDetails, setEditableDetails] = useState({
@@ -30,7 +32,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const res = await api.get('/user/get-profile', { requireAuth: true });
+        const res = await api.get('/user/get-profile');
         const userData = res.data;
 
         let province = '';
@@ -195,10 +197,10 @@ const Profile = () => {
               </div>
             </div>
             <div className={styles.readOnlySection}>
-              <FormField label="Role" value={userDetails.role} readOnly={true} />
-              <FormField label="Email" value={userDetails.email} readOnly={true} />
+              <FormField label={t('page.profile.role')} value={userDetails.role} readOnly={true} />
+              <FormField label={t('page.profile.email')} value={userDetails.email} readOnly={true} />
               <FormField
-                label="Created At"
+                label={t('page.profile.created_at')}
                 value={userDetails.createAt ? new Date(userDetails.createAt).toLocaleString() : 'N/A'}
                 readOnly={true}
               />
@@ -208,21 +210,21 @@ const Profile = () => {
             <div className={styles.card}>
               <div className={styles.cardBody}>
                 <FormField
-                  label="Full Name"
+                  label={t('page.profile.full_name')}
                   name="fullName"
                   value={editableDetails.fullName}
                   onChange={handleInputChange}
                   readOnly={false}
                 />
                 <FormField
-                  label="Username"
+                  label={t('page.profile.username')}
                   name="userName"
                   value={editableDetails.userName}
                   onChange={handleInputChange}
                   readOnly={false}
                 />
                 <FormField
-                  label="Phone"
+                  label={t('page.profile.phone')}
                   name="phoneNumber"
                   value={editableDetails.phoneNumber}
                   onChange={handleInputChange}
@@ -232,7 +234,7 @@ const Profile = () => {
                 {/* Dropdown Tỉnh */}
                 <div className={styles.rowMb3}>
                   <div className={styles.colSm3}>
-                    <h6 className={`${styles.mb0} ${styles.largeLabel}`}>Province</h6>
+                    <h6 className={`${styles.mb0} ${styles.largeLabel}`}>{t('page.profile.province')}</h6>
                   </div>
                   <div className={styles.colSm9}>
                     <Select
@@ -241,7 +243,7 @@ const Profile = () => {
                       style={{ width: '100%' }}
                     >
                       <Option value="default" disabled>
-                        Select your province
+                        {t('page.profile.select_province')}
                       </Option>
                       {provinces.map((province) => (
                         <Option key={province.id} value={province.id}>
@@ -255,7 +257,7 @@ const Profile = () => {
                 {/* Dropdown Quận/Huyện */}
                 <div className={styles.rowMb3}>
                   <div className={styles.colSm3}>
-                    <h6 className={`${styles.mb0} ${styles.largeLabel}`}>District</h6>
+                    <h6 className={`${styles.mb0} ${styles.largeLabel}`}>{t('page.profile.district')}</h6>
                   </div>
                   <div className={styles.colSm9}>
                     <Select
@@ -265,7 +267,7 @@ const Profile = () => {
                       disabled={!editableDetails.province}
                     >
                       <Option value="default" disabled>
-                        Select your district
+                        {t('page.profile.select_district')}
                       </Option>
                       {districts.map((district) => (
                         <Option key={district.id} value={district.id}>
@@ -279,25 +281,20 @@ const Profile = () => {
                 {/* Dropdown Ward */}
                 <div className={styles.rowMb3}>
                   <div className={styles.colSm3}>
-                    <h6 className={`${styles.mb0} ${styles.largeLabel}`}>Ward</h6>
+                    <h6 className={`${styles.mb0} ${styles.largeLabel}`}>{t('page.profile.ward')}</h6>
                   </div>
                   <div className={styles.colSm9}>
                     <Select
                       value={editableDetails.ward || 'default'}
-                      onChange={(value) =>
-                        setEditableDetails((prevState) => ({
-                          ...prevState,
-                          ward: value,
-                        }))
-                      }
+                      onChange={(value) => setEditableDetails((prevState) => ({ ...prevState, ward: value }))}
                       style={{ width: '100%' }}
                       disabled={!editableDetails.district}
                     >
                       <Option value="default" disabled>
-                        Select your ward
+                        {t('page.profile.select_ward')}
                       </Option>
                       {wards.map((ward) => (
-                        <Option key={ward.id} value={ward.name}>
+                        <Option key={ward.id} value={ward.id}>
                           {ward.name}
                         </Option>
                       ))}
@@ -305,19 +302,25 @@ const Profile = () => {
                   </div>
                 </div>
 
+                {/* Specific Address */}
                 <FormField
-                  label="Specific Address"
+                  label={t('page.profile.specific_address')}
                   name="address"
                   value={editableDetails.address}
                   onChange={handleInputChange}
                   readOnly={false}
                 />
+              </div>
 
-                <div className={styles.row}>
-                  <Button type="primary" className={styles.saveButton} onClick={handleSaveChanges}>
-                    Save Changes
-                  </Button>
-                </div>
+              <div className={styles.row}>
+                <Button
+                  className={styles.saveButton}
+                  onClick={handleSaveChanges}
+                  type="primary"
+                  disabled={!isFormModified}
+                >
+                  {t('page.profile.save_changes')}
+                </Button>
               </div>
             </div>
           </div>

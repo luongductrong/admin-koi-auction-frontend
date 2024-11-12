@@ -18,12 +18,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import userStore from '../../zustand';
+import { useTranslation } from 'react-i18next';
 
 const { Sider } = Layout;
 
 const SidebarComponent = React.memo(() => {
   console.log('render SidebarComponent');
 
+  const { t } = useTranslation();
   const { logout } = userStore();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -40,36 +42,36 @@ const SidebarComponent = React.memo(() => {
       {
         key: '1',
         icon: <FontAwesomeIcon icon={faHouse} />,
-        label: <Link to="/">Dashboard</Link>,
+        label: <Link to="/">{t('componnent.sidebar.dashboard')}</Link>,
         className: styles.menuItem,
       },
       {
         key: 'sub1',
         icon: <FontAwesomeIcon icon={faListCheck} />,
-        label: 'Management',
+        label: t('componnent.sidebar.management'),
         className: styles.subMenuItem,
         children: [
           {
             key: '/management/requests',
-            label: <Link to="/management/request">Requests</Link>,
+            label: <Link to="/management/request">{t('componnent.sidebar.requests')}</Link>,
             icon: <FontAwesomeIcon icon={faListCheck} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {
             key: '/management/auctions',
-            label: <Link to="/management/auction">Auctions</Link>,
+            label: <Link to="/management/auction">{t('componnent.sidebar.auctions')}</Link>,
             icon: <FontAwesomeIcon icon={faFileContract} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {
             key: '/management/transactions',
-            label: <Link to="/management/transaction">Transactions</Link>,
+            label: <Link to="/management/transaction">{t('componnent.sidebar.transactions')}</Link>,
             icon: <FontAwesomeIcon icon={faWallet} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {
             key: '/management/users',
-            label: <Link to="/management/user">Users</Link>,
+            label: <Link to="/management/user">{t('componnent.sidebar.users')}</Link>,
             icon: <FontAwesomeIcon icon={faUsers} />,
             className: styles.menuItem,
           },
@@ -78,24 +80,24 @@ const SidebarComponent = React.memo(() => {
       {
         key: 'sub2',
         icon: <FontAwesomeIcon icon={faHandshakeSimple} />,
-        label: 'Services',
+        label: t('componnent.sidebar.services'),
         className: styles.subMenuItem,
         children: [
           {
             key: '/services/chat',
-            label: <Link to="/services/chat">Chat</Link>,
+            label: <Link to="/services/chat">{t('componnent.sidebar.chat')}</Link>,
             icon: <FontAwesomeIcon icon={faCommentDots} />,
             className: styles.menuItem,
           },
           {
             key: '/services/email',
-            label: <Link to="/services/email">Email</Link>,
+            label: <Link to="/services/email">{t('componnent.sidebar.email')}</Link>,
             icon: <FontAwesomeIcon icon={faEnvelope} />,
             className: styles.menuItem,
           },
           {
             key: '/services/blog',
-            label: <Link to="/services/blog">Blogs</Link>,
+            label: <Link to="/services/blog">{t('componnent.sidebar.blogs')}</Link>,
             icon: <FontAwesomeIcon icon={faBlog} />,
             className: styles.menuItem,
           },
@@ -104,18 +106,18 @@ const SidebarComponent = React.memo(() => {
       role === 'Admin' && {
         key: '9',
         icon: <FontAwesomeIcon icon={faCogs} />,
-        label: <Link to="/setting">Setting</Link>,
+        label: <Link to="/setting">{t('componnent.sidebar.settings')}</Link>,
         className: styles.menuItem,
       },
       {
         key: '10',
         icon: <FontAwesomeIcon icon={faSignOutAlt} />,
-        label: 'Logout',
+        label: t('componnent.sidebar.logout'),
         onClick: handleLogout,
         className: styles.menuItem,
       },
     ],
-    [role],
+    [role, t],
   );
 
   return (

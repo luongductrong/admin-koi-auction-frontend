@@ -1,0 +1,60 @@
+{
+  "componnent": {
+    "sidebar": {
+      "dashboard": "Trang chủ",
+      "management": "Quản lý",
+      "requests": "Yêu cầu",
+      "auctions": "Cuộc đấu giá",
+      "transactions": "Giao dịch",
+      "users": "Người dùng",
+      "services": "Dịch vụ",
+      "chat": "Nhắn tin",
+      "email": "Thư điện tử",
+      "blogs": "Bài viết",
+      "settings": "Cài đặt",
+      "logout": "Đăng xuất"
+    },
+    "header": {
+      "dark": "Chế độ tối",
+      "light": "Chế độ sáng"
+    },
+    "breadcumb": {},
+    "modal": {},
+    "popover": {},
+    "popup": {},
+    "tooltip": {}
+  },
+  "page": {
+    "profile": {
+      "full_name": "Họ và tên",
+      "username": "Tên người dùng",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "province": "Tỉnh / Thành phố",
+      "district": "Quận / Huyện",
+      "ward": "Phường / Xã",
+      "specific_address": "Địa chỉ cụ thể",
+      "role": "Vai trò",
+      "email_address": "Địa chỉ email",
+      "created_at": "Ngày tạo",
+      "save_changes": "Lưu thay đổi",
+      "loading": "Đang tải...",
+      "select_province": "Chọn Tỉnh / Thành phố",
+      "select_district": "Chọn Quận / Huyện",
+      "select_ward": "Chọn Phường / Xã",
+      "update_success": "Cập nhật thành công",
+      "profile_update_success": "Hồ sơ của bạn đã được cập nhật thành công.",
+      "update_failed": "Cập nhật thất bại",
+      "profile_update_error": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại."
+    },
+    "dashboard": {},
+    "requests": {},
+    "auctions": {},
+    "transactions": {},
+    "users": {},
+    "chat": {},
+    "email": {},
+    "blogs": {},
+    "settings": {}
+  }
+}

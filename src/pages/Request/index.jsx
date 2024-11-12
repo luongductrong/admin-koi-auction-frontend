@@ -13,7 +13,7 @@ const Request = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
-  const fetchData = async (page = 0, size = 7) => {
+  const fetchData = async (page = 0, size = 10) => {
     try {
       setLoading(true);
       const response = await api.get('/auction/staff/get-auction-request', {

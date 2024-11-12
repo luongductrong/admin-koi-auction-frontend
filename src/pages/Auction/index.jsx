@@ -127,7 +127,7 @@ const Auction = () => {
       render: (status) => {
         let color;
         switch (status) {
-          case 'Ongoing':
+          case 'On-going':
             color = 'blue';
             break;
           case 'Closed':
