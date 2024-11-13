@@ -1,5 +1,5 @@
 {
-  "componnent": {
+  "component": {
     "sidebar": {
       "dashboard": "Dashboard",
       "management": "Management",
@@ -22,7 +22,28 @@
     "modal": {},
     "popover": {},
     "popup": {},
-    "tooltip": {}
+    "tooltip": {},
+    "password_change_drawer": {
+      "title": "Change Password",
+      "current_password": "Current Password",
+      "enter_current_password": "Enter current password",
+      "current_password_required": "Please enter the current password!",
+      "new_password": "New Password",
+      "enter_new_password": "Enter new password",
+      "confirm_new_password": "Confirm New Password",
+      "enter_confirm_password": "Confirm new password",
+      "change_password": "Change Password",
+      "success_message": "New password set successfully!",
+      "current_password_error": "Current password is incorrect!",
+      "error_message": "An error occurred, please try again later.",
+      "new_password_required": "Please enter a new password!",
+      "confirm_password_required": "Please confirm the new password!",
+      "password_mismatch": "Confirmation password does not match!",
+      "password_pattern_error": "Password must contain at least 1 uppercase, 1 lowercase letter, and 1 number!",
+      "password_length_error": "Password must be at least 8 characters long!",
+      "password_max_length_error": "Cannot exceed 100 characters!",
+      "new_password_match_error": "New passwords do not match!"
+    }
   },
   "page": {
     "profile": {
@@ -45,7 +66,9 @@
       "update_success": "Update Successful",
       "profile_update_success": "Your profile has been updated successfully.",
       "update_failed": "Update Failed",
-      "profile_update_error": "An error occurred while updating your profile. Please try again."
+      "profile_update_error": "An error occurred while updating your profile. Please try again.",
+      "password": "Password",
+      "change_password": "Change Password"
     },
     "dashboard": {},
     "requests": {},
@@ -93,14 +116,16 @@
       "status_Active": "Active",
       "status_UnActive": "UnActive",
       "update": "Update",
-      "ban_active": "Ban / Active"
+      "ban_active": "Ban / Active",
+      "new_user": "New User"
     },
     "chat": {
       "role_Admin": "admin",
       "role_User": "user",
       "role_Staff": "staff",
       "role_Breeder": "breeder",
-      "placeholder": "Type a message..."
+      "placeholder": "Type a message...",
+      "new_user": "New User"
     },
     "email": {},
     "blogs": {},

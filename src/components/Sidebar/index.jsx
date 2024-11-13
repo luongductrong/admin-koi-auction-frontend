@@ -42,36 +42,36 @@ const SidebarComponent = React.memo(() => {
       {
         key: '1',
         icon: <FontAwesomeIcon icon={faHouse} />,
-        label: <Link to="/">{t('componnent.sidebar.dashboard')}</Link>,
+        label: <Link to="/">{t('component.sidebar.dashboard')}</Link>,
         className: styles.menuItem,
       },
       {
         key: 'sub1',
         icon: <FontAwesomeIcon icon={faListCheck} />,
-        label: t('componnent.sidebar.management'),
+        label: t('component.sidebar.management'),
         className: styles.subMenuItem,
         children: [
           {
             key: '/management/requests',
-            label: <Link to="/management/request">{t('componnent.sidebar.requests')}</Link>,
+            label: <Link to="/management/request">{t('component.sidebar.requests')}</Link>,
             icon: <FontAwesomeIcon icon={faListCheck} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {
             key: '/management/auctions',
-            label: <Link to="/management/auction">{t('componnent.sidebar.auctions')}</Link>,
+            label: <Link to="/management/auction">{t('component.sidebar.auctions')}</Link>,
             icon: <FontAwesomeIcon icon={faFileContract} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {
             key: '/management/transactions',
-            label: <Link to="/management/transaction">{t('componnent.sidebar.transactions')}</Link>,
+            label: <Link to="/management/transaction">{t('component.sidebar.transactions')}</Link>,
             icon: <FontAwesomeIcon icon={faWallet} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {
             key: '/management/users',
-            label: <Link to="/management/user">{t('componnent.sidebar.users')}</Link>,
+            label: <Link to="/management/user">{t('component.sidebar.users')}</Link>,
             icon: <FontAwesomeIcon icon={faUsers} />,
             className: styles.menuItem,
           },
@@ -80,24 +80,24 @@ const SidebarComponent = React.memo(() => {
       {
         key: 'sub2',
         icon: <FontAwesomeIcon icon={faHandshakeSimple} />,
-        label: t('componnent.sidebar.services'),
+        label: t('component.sidebar.services'),
         className: styles.subMenuItem,
         children: [
           {
             key: '/services/chat',
-            label: <Link to="/services/chat">{t('componnent.sidebar.chat')}</Link>,
+            label: <Link to="/services/chat">{t('component.sidebar.chat')}</Link>,
             icon: <FontAwesomeIcon icon={faCommentDots} />,
             className: styles.menuItem,
           },
           {
             key: '/services/email',
-            label: <Link to="/services/email">{t('componnent.sidebar.email')}</Link>,
+            label: <Link to="/services/email">{t('component.sidebar.email')}</Link>,
             icon: <FontAwesomeIcon icon={faEnvelope} />,
             className: styles.menuItem,
           },
           {
             key: '/services/blog',
-            label: <Link to="/services/blog">{t('componnent.sidebar.blogs')}</Link>,
+            label: <Link to="/services/blog">{t('component.sidebar.blogs')}</Link>,
             icon: <FontAwesomeIcon icon={faBlog} />,
             className: styles.menuItem,
           },
@@ -106,13 +106,13 @@ const SidebarComponent = React.memo(() => {
       role === 'Admin' && {
         key: '9',
         icon: <FontAwesomeIcon icon={faCogs} />,
-        label: <Link to="/setting">{t('componnent.sidebar.settings')}</Link>,
+        label: <Link to="/setting">{t('component.sidebar.settings')}</Link>,
         className: styles.menuItem,
       },
       {
         key: '10',
         icon: <FontAwesomeIcon icon={faSignOutAlt} />,
-        label: t('componnent.sidebar.logout'),
+        label: t('component.sidebar.logout'),
         onClick: handleLogout,
         className: styles.menuItem,
       },

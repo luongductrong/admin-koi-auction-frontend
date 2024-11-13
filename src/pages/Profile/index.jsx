@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Select, notification } from 'antd';
+import { Button, Input, Select, message, notification } from 'antd';
 import styles from './index.module.scss';
 import api from '../../configs';
 import { useTranslation } from 'react-i18next';
 import { addressApi } from '../../configs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import PasswordChangeDrawer from './../../components/PasswordChangeDrawer';
 
 const { Option } = Select;
 
@@ -13,6 +14,7 @@ const Profile = () => {
   const { t } = useTranslation();
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editableDetails, setEditableDetails] = useState({
     fullName: '',
     userName: '',
@@ -71,7 +73,7 @@ const Profile = () => {
           address: specificAddress,
         });
       } catch (error) {
-        console.log('Error fetching user details:', error);
+        message.error('Failed to fetch user details');
       } finally {
         setLoading(false);
       }
@@ -82,7 +84,7 @@ const Profile = () => {
         const res = await addressApi.get('/1/0.htm'); // Fetch provinces
         setProvinces(res.data.data);
       } catch (error) {
-        console.log('Error fetching provinces:', error);
+        message.error('Failed to fetch provinces');
       }
     };
 
@@ -96,7 +98,7 @@ const Profile = () => {
       const res = await addressApi.get(`/2/${provinceId}.htm`);
       setDistricts(res.data.data);
     } catch (error) {
-      console.log('Error fetching districts:', error);
+      message.error('Failed to fetch districts');
     }
   };
 
@@ -106,7 +108,7 @@ const Profile = () => {
       const res = await addressApi.get(`/3/${districtId}.htm`);
       setWards(res.data.data);
     } catch (error) {
-      console.log('Error fetching wards:', error);
+      message.error('Failed to fetch wards');
     }
   };
 
@@ -192,6 +194,11 @@ const Profile = () => {
                       <FontAwesomeIcon icon={faCheckCircle} className={styles.blueTick} />
                     )}
                     <h2 className={styles.profileName}>{userDetails.fullName}</h2>
+                    <div className={styles.changePassword}>
+                      <Button onClick={() => setIsDrawerOpen(true)} type="primary">
+                        {t('page.profile.change_password')}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -324,6 +331,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          <PasswordChangeDrawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
         </div>
       </div>
     </div>

@@ -147,7 +147,7 @@ const User = () => {
       key: 'fullName',
       render: (text) => (
         <div>
-          <b>{text.fullName}</b>
+          <b>{text.fullName.length != 0 ? text.fullName : t('page.users.new_user')}</b>
           <div>{text.email}</div>
         </div>
       ),

@@ -85,12 +85,18 @@
   color: #007bff;
   font-size: 12px;
   margin: 5px;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 
 .profileInfo {
   display: flex;
   align-items: center;
+  width: 67.5%;
+  align-items: center;
+}
+
+.changePassword {
+  margin-left: auto;
 }
 
 .readOnlySection {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faAnglesDown } from '@fortawesome/free-solid-svg-icons';
-import { Input, Spin, Divider } from 'antd';
+import { Input, Spin, Divider, message } from 'antd';
 import api from '../../configs';
 import { useTranslation } from 'react-i18next';
 import SocketService from '../../services/socket';
@@ -35,7 +35,7 @@ const Chat = () => {
         const activeContacts = res.data.filter((user) => user.status === 'Active');
         setContacts(activeContacts);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        message.error('Error fetching contacts');
       }
     };
     fetchContacts();
@@ -65,7 +65,7 @@ const Chat = () => {
 
           fetchMessages(totalPage - 1);
         } catch (error) {
-          console.error('Error fetching total pages:', error);
+          console.log(error);
         }
       }
     };
@@ -94,7 +94,7 @@ const Chat = () => {
       setMessages((prevMessages) => [...content, ...prevMessages]);
       setPage(newPage);
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -135,7 +135,7 @@ const Chat = () => {
       });
       setMessageInput('');
     } catch (error) {
-      console.error('Error sending message:', error);
+      message.error('Error sending message');
     }
   };
 
@@ -176,7 +176,7 @@ const Chat = () => {
             >
               <img src={avtSrc} className={styles.contactAvatar} alt="Avatar" />
               <div>
-                <h4>{contact.fullName}</h4>
+                <h4>{contact.fullName.length == 0 ? t('page.chat.new_user') : contact.fullName}</h4>
                 <span>{t(`page.chat.role_${contact.role}`)}</span>
               </div>
             </li>
@@ -229,18 +229,11 @@ const Chat = () => {
             </React.Fragment>
           ))}
           <div ref={messagesEndRef} />
-          {/* <button
-            className={styles.scrollIcon}
-            onClick={() => messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <FontAwesomeIcon icon={faAnglesDown} />
-          </button> */}
         </ul>
 
         <div className={styles.inputContainer}>
           <div className={styles.inputWrapper}>
             <TextArea
-              // placeholder="Enter text here..."
               placeholder={t('page.chat.placeholder')}
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}

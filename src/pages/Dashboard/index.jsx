@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { Form, Button, Input, Card, Statistic, ConfigProvider } from 'antd';
+import { Form, Button, Input, Card, Statistic, ConfigProvider, message } from 'antd';
 import { UsergroupAddOutlined, DollarOutlined, ShoppingCartOutlined, LinuxOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
@@ -73,7 +73,7 @@ const Dashboard = () => {
       const response = await api.get('/dashboard', { params: filters });
       setSummaryData(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      message.error('Failed to fetch summary data');
     }
   };
   useEffect(() => {

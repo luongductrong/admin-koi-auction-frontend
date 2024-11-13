@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Tag, Table, Button, Pagination, Flex } from 'antd';
+import { Tag, Table, Button, Pagination, Flex, message } from 'antd';
 import FishPopover from '../../components/Popover/FishPopover';
 import UserPopover from '../../components/Popover/UserPopover';
 import { DownloadOutlined } from '@ant-design/icons';
@@ -31,7 +31,7 @@ const Auction = () => {
         setTotalPages(response.data.totalPages);
       }
     } catch (error) {
-      console.error('Failed to fetch auction data', error);
+      message.error('Failed to fetch auction data');
     } finally {
       setLoading(false);
     }
@@ -152,7 +152,7 @@ const Auction = () => {
 
   const exportToExcel = () => {
     if (!auctions || auctions.length === 0) {
-      console.error('No auction data available to export');
+      message.error('No data to export');
       return;
     }
 

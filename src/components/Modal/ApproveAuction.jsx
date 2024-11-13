@@ -7,10 +7,10 @@ const ApproveAuction = ({ visible, onApprove, onReject, onCancel, auction }) => 
       open={visible}
       onCancel={onCancel}
       footer={[
-        <Button key="approve" type="primary" onClick={onApprove}>
+        <Button key="approve" type="primary" onClick={() => onApprove('approve')}>
           Approve
         </Button>,
-        <Button key="reject" type="danger" onClick={onReject}>
+        <Button key="reject" type="danger" onClick={() => onReject('reject')}>
           Reject
         </Button>,
       ]}
