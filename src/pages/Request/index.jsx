@@ -17,7 +17,6 @@ const Request = () => {
     try {
       setLoading(true);
       const response = await api.get('/auction/staff/get-auction-request', {
-        requireAuth: true,
         params: {
           page,
           size,
@@ -38,7 +37,7 @@ const Request = () => {
 
   const handlePageChange = (page) => {
     console.log('render page: ', page);
-    setCurrentPage(page - 1); // Chuyển trang, nhưng trừ đi 1 để đúng với API bắt đầu từ 0
+    setCurrentPage(page - 1);
     fetchData(page - 1);
   };
 
@@ -50,9 +49,7 @@ const Request = () => {
   const handleApprove = async () => {
     if (currentAuction) {
       try {
-        const response = await api.post(`/auction/staff/approve/${currentAuction.auction.id}`, {
-          // Thêm dữ liệu cần thiết nếu cần
-        });
+        await api.post(`/auction/staff/approve/${currentAuction.auction.id}`, {});
         message.success('Auction approved successfully!'); // Hiện thông báo thành công
         setIsActionModalOpen(false);
         fetchData(currentPage); // Cập nhật danh sách sau khi phê duyệt
@@ -65,14 +62,12 @@ const Request = () => {
   const handleReject = async () => {
     if (currentAuction) {
       try {
-        const response = await api.post(`/auction/staff/reject/${currentAuction.auction.id}`, {
-          // Thêm dữ liệu cần thiết nếu cần
-        });
-        message.success('Auction rejected successfully!'); // Hiện thông báo thành công
+        await api.post(`/auction/staff/reject/${currentAuction.auction.id}`, {});
+        message.success('Auction rejected successfully!');
         setIsActionModalOpen(false);
         fetchData(currentPage); // Cập nhật danh sách sau khi từ chối
       } catch (error) {
-        message.error('Failed to reject auction. Please try again.'); // Hiện thông báo lỗi
+        message.error('Failed to reject auction. Please try again.');
       }
     }
   };

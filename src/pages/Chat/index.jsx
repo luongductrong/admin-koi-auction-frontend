@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faAnglesDown } from '@fortawesome/free-solid-svg-icons';
 import { Input, Spin, Divider } from 'antd';
 import api from '../../configs';
+import { useTranslation } from 'react-i18next';
 import SocketService from '../../services/socket';
 import styles from './index.module.scss';
 import userStore from '../../zustand';
@@ -11,6 +12,7 @@ import AutoCompleteComponent from '../../components/AutoComplete';
 const { TextArea } = Input;
 
 const Chat = () => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [currChat, setCurrChat] = useState({ receiverName: null, receiverId: null });
   const [contacts, setContacts] = useState([]);
@@ -30,7 +32,8 @@ const Chat = () => {
     const fetchContacts = async () => {
       try {
         const res = await api.get('/admin-manager/users/getAll');
-        setContacts(res.data);
+        const activeContacts = res.data.filter((user) => user.status === 'Active');
+        setContacts(activeContacts);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
@@ -174,7 +177,7 @@ const Chat = () => {
               <img src={avtSrc} className={styles.contactAvatar} alt="Avatar" />
               <div>
                 <h4>{contact.fullName}</h4>
-                <span>{contact.role}</span>
+                <span>{t(`page.chat.role_${contact.role}`)}</span>
               </div>
             </li>
           ))}
@@ -237,7 +240,8 @@ const Chat = () => {
         <div className={styles.inputContainer}>
           <div className={styles.inputWrapper}>
             <TextArea
-              placeholder="Enter text here..."
+              // placeholder="Enter text here..."
+              placeholder={t('page.chat.placeholder')}
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
               onKeyUp={(e) => e.key === 'Enter' && handleSendMessage()}
