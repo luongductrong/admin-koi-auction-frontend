@@ -8,6 +8,7 @@ const breadcrumbNameMap = {
   '/management/request': 'Requests',
   '/management/auction': 'Auctions',
   '/management/transaction': 'Transactions',
+  '/management/order': 'Orders',
   '/management/user': 'Users',
   '/services': 'Services',
   '/services/chat': 'Chats',

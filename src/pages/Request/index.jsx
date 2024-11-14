@@ -19,7 +19,6 @@ const AuctionRequestManagement = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isRefund, setIsRefund] = useState(false);
 
-  // Fetch Auction Requests
   const fetchRequests = async (page = 0) => {
     setLoading(true);
     try {
@@ -33,7 +32,6 @@ const AuctionRequestManagement = () => {
     }
   };
 
-  // Fetch Refund Requests
   const fetchRefunds = async (page = 0) => {
     setLoading(true);
     try {
@@ -47,7 +45,6 @@ const AuctionRequestManagement = () => {
     }
   };
 
-  // Effect to fetch the data based on whether it's a refund or auction request
   useEffect(() => {
     if (isRefund) {
       fetchRefunds(currentPage);
@@ -56,7 +53,6 @@ const AuctionRequestManagement = () => {
     }
   }, [currentPage, isRefund]);
 
-  // Handle Action (Approve, Reject, Complete Refund)
   const handleAction = async (action) => {
     if (!selectedRequest) return;
 
@@ -82,12 +78,10 @@ const AuctionRequestManagement = () => {
     }
   };
 
-  // Handle Page Change
   const handlePageChange = (page) => {
     setCurrentPage(page - 1);
   };
 
-  // Define Columns for Auction and Refund Requests
   const columns = isRefund
     ? [
         {
@@ -196,7 +190,7 @@ const AuctionRequestManagement = () => {
               type="primary"
               onClick={() => {
                 setSelectedRequest(text);
-                setIsModalVisible(true); // Show approve/reject modal for auction
+                setIsModalVisible(true);
               }}
             >
               {t('page.requests.approve_reject')}
@@ -229,7 +223,6 @@ const AuctionRequestManagement = () => {
         </>
       )}
 
-      {/* ApproveAuction Modal */}
       <ApproveAuction
         visible={isModalVisible}
         onApprove={() => handleAction('approve')}
@@ -238,7 +231,6 @@ const AuctionRequestManagement = () => {
         auction={selectedRequest}
       />
 
-      {/* ConfirmModal for Refund */}
       <ConfirmModal
         visible={isConfirmVisible}
         title="Are you sure you want to complete this transaction?"

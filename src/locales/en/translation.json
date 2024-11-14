@@ -12,7 +12,8 @@
       "email": "Email",
       "blogs": "Blogs",
       "settings": "Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "orders": "Orders"
     },
     "header": {
       "dark": "Dark",
@@ -166,6 +167,23 @@
       "role_Breeder": "breeder",
       "placeholder": "Type a message...",
       "new_user": "New User"
+    },
+    "orders": {
+      "order_id": "Order ID",
+      "bidder_id": "Bidder ID",
+      "status": "Status",
+      "action": "Action",
+      "view_details": "View Details",
+      "order_details": "Order Details",
+      "address": "Address",
+      "price": "Price",
+      "phone_number": "Phone Number",
+      "note": "Note",
+      "resolve_dispute": "Resolve Dispute",
+      "no_order_details": "No order details",
+      "reject": "Reject",
+      "approve": "Approve",
+      "confirm_dispute_action": "Are you sure you want to resolve this dispute?"
     },
     "email": {},
     "blogs": {},

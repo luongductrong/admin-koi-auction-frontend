@@ -12,7 +12,8 @@
       "email": "Email",
       "blogs": "Bài viết",
       "settings": "Cài đặt",
-      "logout": "Đăng xuất"
+      "logout": "Đăng xuất",
+      "orders": "Đơn hàng"
     },
     "header": {
       "dark": "Chế độ tối",
@@ -70,6 +71,23 @@
       "profile_update_error": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại.",
       "password": "Mật khẩu",
       "change_password": "Thay đổi mật khẩu"
+    },
+    "orders": {
+      "order_id": "Mã đơn hàng",
+      "bidder_id": "Mã người đấu giá",
+      "status": "Trạng thái",
+      "action": "Hành động",
+      "view_details": "Xem chi tiết",
+      "order_details": "Chi tiết đơn hàng",
+      "address": "Địa chỉ",
+      "price": "Giá",
+      "phone_number": "Số điện thoại",
+      "note": "Ghi chú",
+      "resolve_dispute": "Giải quyết tranh chấp",
+      "no_order_details": "Không có chi tiết đơn hàng",
+      "reject": "Từ chối",
+      "approve": "Duyệt",
+      "confirm_dispute_action": "Xác nhận hành động tranh chấp"
     },
     "dashboard": {},
     "requests": {

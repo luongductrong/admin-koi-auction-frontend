@@ -13,6 +13,7 @@ import {
   faFileContract,
   faHandshakeSimple,
   faCommentDots,
+  faCartShopping,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
@@ -55,6 +56,12 @@ const SidebarComponent = React.memo(() => {
             key: '/management/requests',
             label: <Link to="/management/request">{t('component.sidebar.requests')}</Link>,
             icon: <FontAwesomeIcon icon={faListCheck} />,
+            className: styles.menuItem,
+          },
+          {
+            key: '/management/orders',
+            label: <Link to="/management/order">{t('component.sidebar.orders')}</Link>,
+            icon: <FontAwesomeIcon icon={faCartShopping} />,
             className: styles.menuItem,
           },
           role === 'Admin' && {

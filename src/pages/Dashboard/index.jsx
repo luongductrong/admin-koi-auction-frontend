@@ -73,9 +73,6 @@ const Dashboard = () => {
       // Cập nhật dữ liệu vào state
       setAuctionData(auctionCounts);
       setTransactionData(transactionCounts);
-
-      console.log('Final auction data for the year:', auctionCounts);
-      console.log('Final transaction data for the year:', transactionCounts);
     } catch (error) {
       console.error('Error fetching data:', error);
       // Fallback nếu có lỗi, điền 0 vào tất cả các tháng
@@ -88,7 +85,6 @@ const Dashboard = () => {
     fillData();
   }, []);
 
-  // Cập nhật chartData với dữ liệu từ state
   const chartData = {
     line: {
       labels: [
@@ -108,18 +104,15 @@ const Dashboard = () => {
       datasets: [
         {
           label: 'Transactions',
-          data: transactionData, // Sử dụng dữ liệu từ state transactionData
-          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          borderColor: 'rgba(153, 102, 255, 1)',
-          borderWidth: 1,
+          data: transactionData,
         },
       ],
     },
     pie: {
-      labels: ['Bình', 'Vẫn là bình', 'Bình nữa'],
+      labels: ['Assending', 'Descending', 'Another'],
       datasets: [
         {
-          data: [300, 50, 100],
+          data: [300, 100, 50],
         },
       ],
     },
@@ -141,10 +134,7 @@ const Dashboard = () => {
       datasets: [
         {
           label: 'Auctions',
-          data: auctionData, // Sử dụng dữ liệu từ state auctionData
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
+          data: auctionData,
         },
       ],
     },
