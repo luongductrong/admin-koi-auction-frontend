@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { Form, Button, Input, Card, Statistic, ConfigProvider } from 'antd';
+import { Form, Button, Input, Card, Statistic, ConfigProvider, message } from 'antd';
 import { UsergroupAddOutlined, DollarOutlined, ShoppingCartOutlined, LinuxOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
@@ -39,30 +39,102 @@ const Dashboard = () => {
     year: currYear,
   });
 
+  const [auctionData, setAuctionData] = useState(Array(12).fill(0)); // Khởi tạo giá trị mặc định cho các tháng
+  const [transactionData, setTransactionData] = useState(Array(12).fill(0)); // Khởi tạo dữ liệu giao dịch
+
+  const fillData = async () => {
+    const year = 2024;
+
+    try {
+      // Fetch auction data và transaction data cho tất cả các tháng
+      const [auctionResponses, transactionResponses] = await Promise.all([
+        // Fetch auction data
+        Promise.all(
+          Array.from({ length: 12 }, (_, month) =>
+            api.get('/dashboard/auction', {
+              params: { month: month + 1, year },
+            }),
+          ),
+        ),
+        // Fetch transaction data
+        Promise.all(
+          Array.from({ length: 12 }, (_, month) =>
+            api.get('/dashboard/transaction', {
+              params: { month: month + 1, year },
+            }),
+          ),
+        ),
+      ]);
+
+      // Extract auctionCount và transactionCount_total từ mỗi response
+      const auctionCounts = auctionResponses.map((response) => response.data.auctionCount);
+      const transactionCounts = transactionResponses.map((response) => response.data.transactionCount_total);
+
+      // Cập nhật dữ liệu vào state
+      setAuctionData(auctionCounts);
+      setTransactionData(transactionCounts);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Fallback nếu có lỗi, điền 0 vào tất cả các tháng
+      setAuctionData(Array(12).fill(0));
+      setTransactionData(Array(12).fill(0));
+    }
+  };
+
+  useEffect(() => {
+    fillData();
+  }, []);
+
   const chartData = {
     line: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
       datasets: [
         {
-          label: 'Revenue',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Transactions',
+          data: transactionData,
         },
       ],
     },
     pie: {
-      labels: ['Bình', 'Vẫn là bình', 'Bình nữa'],
+      labels: ['Assending', 'Descending', 'Another'],
       datasets: [
         {
-          data: [300, 50, 100],
+          data: [300, 100, 50],
         },
       ],
     },
     col: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
       datasets: [
         {
           label: 'Auctions',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          data: auctionData,
         },
       ],
     },
@@ -73,7 +145,7 @@ const Dashboard = () => {
       const response = await api.get('/dashboard', { params: filters });
       setSummaryData(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      message.error('Failed to fetch summary data');
     }
   };
   useEffect(() => {

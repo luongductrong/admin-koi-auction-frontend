@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 import api from '../../configs';
 import userStore from '../../zustand';
 import ConfirmPopup from '../../components/Popup/ConfirmPopup';
 import RoleUpdate from '../../components/Modal/RoleUpdate';
 
 const User = () => {
+  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -141,22 +143,22 @@ const User = () => {
       key: 'id',
     },
     {
-      title: 'Full Name',
+      title: t('page.users.full_name'),
       key: 'fullName',
       render: (text) => (
         <div>
-          <b>{text.fullName}</b>
+          <b>{text.fullName.length != 0 ? text.fullName : t('page.users.new_user')}</b>
           <div>{text.email}</div>
         </div>
       ),
     },
     {
-      title: 'Phone',
+      title: t('page.users.phone_number'),
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
     },
     {
-      title: 'Address',
+      title: t('page.users.address'),
       key: 'address',
       render: (text) => (
         <div
@@ -172,45 +174,47 @@ const User = () => {
       ),
     },
     {
-      title: 'Create At',
+      title: t('page.users.created_at'),
       dataIndex: 'createAt',
       key: 'createAt',
       render: (text) => new Date(text).toLocaleString(),
     },
     {
-      title: 'Update At',
+      title: t('page.users.update_at'),
       dataIndex: 'updateAt',
       key: 'updateAt',
       render: (text) => new Date(text).toLocaleString(),
     },
     {
-      title: 'Role',
+      title: t('page.users.role'),
       dataIndex: 'role',
       key: 'role',
       render: (role) => (
         <div
           style={{ fontWeight: role === 'Admin' ? 'bold' : 'normal', color: role === 'Admin' ? '#001529' : 'inherit' }}
         >
-          {role}
+          {t(`page.users.role_${role}`)}
         </div>
       ),
     },
     {
-      title: 'Status',
+      title: t('page.users.status'),
       dataIndex: 'status',
       key: 'status',
-      render: (status) => <div style={{ color: status === 'Active' ? 'green' : 'red' }}>{status}</div>,
+      render: (status) => (
+        <div style={{ color: status === 'Active' ? 'green' : 'red' }}>{t(`page.users.status_${status}`)}</div>
+      ),
     },
     {
-      title: 'Action',
+      title: t('page.users.action'),
       key: 'action',
       render: (text) => (
         <div>
           <Button onClick={() => handleUpdate(text)} type="primary">
-            Update
+            {t('page.users.update')}
           </Button>
           <Button onClick={() => handleBan(text)} danger>
-            Ban / Active
+            {t('page.users.ban_active')}
           </Button>
         </div>
       ),

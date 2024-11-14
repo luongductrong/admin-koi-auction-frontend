@@ -12,6 +12,7 @@ import Transaction from '../pages/Transaction';
 import Page401 from '../pages/401';
 import Page404 from '../pages/404';
 import ForgotPassword from '../pages/ForgotPassword';
+import OrderManagement from '../pages/Order';
 
 const publicRoutes = [
   { path: '/login', component: Login },
@@ -24,6 +25,7 @@ const privateRoutes = [
   { path: '/', component: Dashboard },
   { path: '/profile', component: Profile },
   { path: '/management/request', component: RequestPage },
+  { path: '/management/order', component: OrderManagement },
   { path: '/services/chat', component: Chat },
   { path: '/services/email', component: Email },
   { path: '/services/blog', component: Blog },

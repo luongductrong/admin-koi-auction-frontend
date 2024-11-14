@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Tag, Table, Button, Pagination, Flex } from 'antd';
+import { Tag, Table, Button, Pagination, Flex, message } from 'antd';
 import FishPopover from '../../components/Popover/FishPopover';
 import UserPopover from '../../components/Popover/UserPopover';
 import { DownloadOutlined } from '@ant-design/icons';
 import api from '../../configs';
+import { useTranslation } from 'react-i18next';
 import * as XLSX from 'xlsx';
 
 const Auction = () => {
+  const { t } = useTranslation();
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,7 +31,7 @@ const Auction = () => {
         setTotalPages(response.data.totalPages);
       }
     } catch (error) {
-      console.error('Failed to fetch auction data', error);
+      message.error('Failed to fetch auction data');
     } finally {
       setLoading(false);
     }
@@ -53,16 +55,16 @@ const Auction = () => {
       dataIndex: ['auction', 'id'],
     },
     {
-      title: 'Fish Details',
+      title: t('page.auctions.fish_details'),
       key: 'koiFish',
       render: (text) => {
         return (
           <>
             <b>
               {text.koiFish && text.koiFish.length > 0 ? (
-                <FishPopover fishIds={text.koiFish}>Click here</FishPopover>
+                <FishPopover fishIds={text.koiFish}>{t('page.auctions.click_here')}</FishPopover>
               ) : (
-                'No Fish Data'
+                t('page.auctions.no_data')
               )}
             </b>
           </>
@@ -70,58 +72,58 @@ const Auction = () => {
       },
     },
     {
-      title: 'Start Time',
+      title: t('page.auctions.start_time'),
       dataIndex: ['auction', 'startTime'],
       render: (text) => {
         return text ? new Date(text).toLocaleString() : 'N/A';
       },
     },
     {
-      title: 'Estimated End Time',
+      title: t('page.auctions.end_time'),
       dataIndex: ['auction', 'endTime'],
       render: (text) => {
         return text ? new Date(text).toLocaleString() : 'N/A';
       },
     },
     {
-      title: 'Method',
+      title: t('page.auctions.auction_method'),
       dataIndex: ['auction', 'auctionMethod'],
     },
     {
-      title: 'Start Price',
+      title: t('page.auctions.starting_price'),
       dataIndex: ['auction', 'startingPrice'],
       render: (text) => <span>{text ? `${text}` : 'N/A'}</span>,
     },
     {
-      title: 'Bid Step',
+      title: t('page.auctions.bid_step'),
       dataIndex: ['auction', 'bidStep'],
     },
     {
-      title: 'Buyout Price',
+      title: t('page.auctions.buyout_price'),
       dataIndex: ['auction', 'buyoutPrice'],
     },
     {
-      title: 'Final Price',
+      title: t('page.auctions.final_price'),
       dataIndex: ['auction', 'finalPrice'],
       render: (text) => <span>{text ? `${text}` : 'N/A'}</span>,
     },
     {
-      title: 'Winner',
+      title: t('page.auctions.winner'),
       dataIndex: ['auction', 'winnerID'],
       render: (text) => <span>{text || 'N/A'}</span>,
     },
     {
-      title: 'Breeder',
+      title: t('page.auctions.breeder'),
       dataIndex: ['auction', 'breederID'],
       render: (text) => <UserPopover userId={text} />,
     },
     {
-      title: 'Approved By',
+      title: t('page.auctions.staff'),
       dataIndex: ['auction', 'staffID'],
       render: (text) => <UserPopover userId={text} />,
     },
     {
-      title: 'Status',
+      title: t('page.auctions.status'),
       dataIndex: ['auction', 'status'],
       key: 'status',
       render: (status) => {
@@ -130,7 +132,7 @@ const Auction = () => {
           case 'Ongoing':
             color = 'blue';
             break;
-          case 'Closed':
+          case 'Scheduled':
             color = 'green';
             break;
           case 'Pending':
@@ -143,13 +145,14 @@ const Auction = () => {
             color = 'gray';
         }
         return <Tag color={color}>{toUpperCase2(status)}</Tag>;
+        // return <Tag color={color}>{toUpperCase2(t(`status_${status}`))}</Tag>;
       },
     },
   ];
 
   const exportToExcel = () => {
     if (!auctions || auctions.length === 0) {
-      console.error('No auction data available to export');
+      message.error('No data to export');
       return;
     }
 
@@ -183,7 +186,7 @@ const Auction = () => {
       <Flex align="flex-end" vertical style={{ marginBottom: '20px' }}>
         <Flex>
           <Button onClick={exportToExcel} type="primary" icon={<DownloadOutlined />}>
-            Export to Excel
+            {t('page.auctions.export_file')}
           </Button>
         </Flex>
       </Flex>
