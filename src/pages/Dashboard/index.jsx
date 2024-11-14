@@ -39,13 +39,79 @@ const Dashboard = () => {
     year: currYear,
   });
 
+  const [auctionData, setAuctionData] = useState(Array(12).fill(0)); // Khởi tạo giá trị mặc định cho các tháng
+  const [transactionData, setTransactionData] = useState(Array(12).fill(0)); // Khởi tạo dữ liệu giao dịch
+
+  const fillData = async () => {
+    const year = 2024;
+
+    try {
+      // Fetch auction data và transaction data cho tất cả các tháng
+      const [auctionResponses, transactionResponses] = await Promise.all([
+        // Fetch auction data
+        Promise.all(
+          Array.from({ length: 12 }, (_, month) =>
+            api.get('/dashboard/auction', {
+              params: { month: month + 1, year },
+            }),
+          ),
+        ),
+        // Fetch transaction data
+        Promise.all(
+          Array.from({ length: 12 }, (_, month) =>
+            api.get('/dashboard/transaction', {
+              params: { month: month + 1, year },
+            }),
+          ),
+        ),
+      ]);
+
+      // Extract auctionCount và transactionCount_total từ mỗi response
+      const auctionCounts = auctionResponses.map((response) => response.data.auctionCount);
+      const transactionCounts = transactionResponses.map((response) => response.data.transactionCount_total);
+
+      // Cập nhật dữ liệu vào state
+      setAuctionData(auctionCounts);
+      setTransactionData(transactionCounts);
+
+      console.log('Final auction data for the year:', auctionCounts);
+      console.log('Final transaction data for the year:', transactionCounts);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Fallback nếu có lỗi, điền 0 vào tất cả các tháng
+      setAuctionData(Array(12).fill(0));
+      setTransactionData(Array(12).fill(0));
+    }
+  };
+
+  useEffect(() => {
+    fillData();
+  }, []);
+
+  // Cập nhật chartData với dữ liệu từ state
   const chartData = {
     line: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
       datasets: [
         {
-          label: 'Revenue',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Transactions',
+          data: transactionData, // Sử dụng dữ liệu từ state transactionData
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 1,
         },
       ],
     },
@@ -58,11 +124,27 @@ const Dashboard = () => {
       ],
     },
     col: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
       datasets: [
         {
           label: 'Auctions',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          data: auctionData, // Sử dụng dữ liệu từ state auctionData
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
         },
       ],
     },

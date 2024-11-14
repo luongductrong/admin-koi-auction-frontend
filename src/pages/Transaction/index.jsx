@@ -3,11 +3,13 @@ import { Table, Spin, Button, Input, DatePicker, Space, Select, Pagination, Slid
 import { DownloadOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import * as XLSX from 'xlsx';
+import { useTranslation } from 'react-i18next';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const TransactionManagement = () => {
+  const { t } = useTranslation();
   const [walletId, setWalletId] = useState('');
   const [transactionType, setTransactionType] = useState('All');
   const [amountRange, setAmountRange] = useState([0, 1000000000000]);
@@ -30,7 +32,7 @@ const TransactionManagement = () => {
         const response = await api.get('/admin/total-balance');
         setTotalBalance(response.data);
       } catch (error) {
-        console.error('Failed to fetch total balance:', error);
+        message.error('Failed to fetch total balance');
       }
     };
     fetchTotalBalance();
@@ -60,7 +62,7 @@ const TransactionManagement = () => {
       setTotalElements(response.data.totalElements);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error('Failed to fetch transactions:', error);
+      message.error('Failed to fetch transactions');
     } finally {
       setLoading(false);
     }
@@ -72,7 +74,7 @@ const TransactionManagement = () => {
 
   const exportToExcel = () => {
     if (!transactions || transactions.length === 0) {
-      console.error('No transaction data available to export');
+      message.error('No data to export');
       return;
     }
 
@@ -93,37 +95,47 @@ const TransactionManagement = () => {
   };
 
   const columns = [
-    { title: 'Transaction ID', dataIndex: 'id' },
-    { title: 'Wallet ID', dataIndex: ['walletID', 'id'] },
-    { title: 'Transaction Amount', dataIndex: 'amount' },
-    { title: 'Transaction Time', dataIndex: 'time', render: (text) => new Date(text).toLocaleString() },
-    { title: 'Auction ID', dataIndex: 'auctionID' },
-    { title: 'Status', dataIndex: 'status' },
-    { title: 'Transaction Type', dataIndex: 'transactionType', render: (text) => text || 'N/A' },
+    { title: t('page.transactions.transaction_id'), dataIndex: 'id' },
+    { title: t('page.transactions.wallet_id'), dataIndex: ['walletID', 'id'] },
+    { title: t('page.transactions.transaction_amount'), dataIndex: 'amount' },
+    {
+      title: t('page.transactions.transaction_time'),
+      dataIndex: 'time',
+      render: (text) => new Date(text).toLocaleString(),
+    },
+    { title: t('page.transactions.auction_id'), dataIndex: 'auctionID' },
+    { title: t('page.transactions.status'), dataIndex: 'status' },
+    { title: t('page.transactions.transaction_type'), dataIndex: 'transactionType', render: (text) => text || 'N/A' },
   ];
 
   return (
     <div>
       {totalBalance !== null && (
         <div style={{ marginBottom: 20 }}>
-          <h2>Total Balance: {totalBalance.toLocaleString()} VNĐ</h2>
+          <h2>
+            {t('page.transactions.total_balance')}: {totalBalance.toLocaleString()} VNĐ
+          </h2>
         </div>
       )}
 
       <Space style={{ marginBottom: 20, width: '100%', justifyContent: 'space-between' }}>
         <Space>
-          <Input placeholder="Wallet ID" value={walletId} onChange={(e) => setWalletId(e.target.value)} />
+          <Input
+            placeholder={t('page.transactions.wallet_id')}
+            value={walletId}
+            onChange={(e) => setWalletId(e.target.value)}
+          />
           <Select value={transactionType} onChange={(value) => setTransactionType(value)} style={{ width: 120 }}>
-            <Option value="All">All</Option>
-            <Option value="Top-up">Top-up</Option>
-            <Option value="Deposit">Deposit</Option>
-            <Option value="Payment">Payment</Option>
-            <Option value="Withdraw">Withdraw</Option>
+            <Option value="All">{t('page.transactions.type_all')}</Option>
+            <Option value="Top-up">{t('page.transactions.type_topup')}</Option>
+            <Option value="Deposit">{t('page.transactions.type_deposit')}</Option>
+            <Option value="Payment">{t('page.transactions.type_payment')}</Option>
+            <Option value="Withdraw">{t('page.transactions.type_withdraw')}</Option>
           </Select>
           <Select value={status} onChange={(value) => setStatus(value)} style={{ width: 120 }}>
-            <Option value="All">All</Option>
-            <Option value="Completed">Completed</Option>
-            <Option value="Pending">Pending</Option>
+            <Option value="All">{t('page.transactions.type_all')}</Option>
+            <Option value="Completed">{t('page.transactions.type_completed')}</Option>
+            <Option value="Pending">{t('page.transactions.type_pending')}</Option>
           </Select>
           <Slider
             range
@@ -142,12 +154,12 @@ const TransactionManagement = () => {
               handleFetchData();
             }}
           >
-            Fetch Data
+            {t('page.transactions.fetch_data')}
           </Button>
         </Space>
 
         <Button onClick={exportToExcel} type="primary" icon={<DownloadOutlined />}>
-          Export Transactions
+          {t('page.transactions.export_to_excel')}
         </Button>
       </Space>
 

@@ -129,16 +129,16 @@ const Auction = () => {
       render: (status) => {
         let color;
         switch (status) {
-          case 'On-going':
+          case 'Ongoing':
             color = 'blue';
             break;
-          case 'Closed':
+          case 'Scheduled':
             color = 'green';
             break;
           case 'Pending':
             color = 'orange';
             break;
-          case 'Rejected':
+          case 'Reject':
             color = 'red';
             break;
           default:

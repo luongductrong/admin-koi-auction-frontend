@@ -23,6 +23,8 @@ function PasswordChangeDrawer({ open = false, onClose = () => {} }) {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         message.error(t('component.password_change_drawer.current_password_error'));
+      } else if (error.response && error.response.status === 401) {
+        message.error(t('component.password_change_drawer.unauthorized_error'));
       } else {
         message.error(t('component.password_change_drawer.error_message'));
       }

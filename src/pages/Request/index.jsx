@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Pagination, Spin, Radio, message, Modal } from 'antd';
 import api from '../../configs';
+import { useTranslation } from 'react-i18next';
 import FishPopover from '../../components/Popover/FishPopover';
 import UserPopover from '../../components/Popover/UserPopover';
 import ApproveAuction from '../../components/Modal/ApproveAuction';
+import ConfirmModal from '../../components/Modal/ConfirmModal';
 
 const AuctionRequestManagement = () => {
+  const { t } = useTranslation();
   const [requests, setRequests] = useState([]);
   const [refunds, setRefunds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isRefund, setIsRefund] = useState(false);
 
+  // Fetch Auction Requests
   const fetchRequests = async (page = 0) => {
     setLoading(true);
     try {
       const response = await api.get(`/auction/staff/get-auction-request?page=${page}`);
-      setRequests(response.data.content);
+      setRequests(response.data.auctionRequests);
       setTotalElements(response.data.totalElements);
       setLoading(false);
     } catch (error) {
@@ -28,12 +33,13 @@ const AuctionRequestManagement = () => {
     }
   };
 
+  // Fetch Refund Requests
   const fetchRefunds = async (page = 0) => {
     setLoading(true);
     try {
       const response = await api.get(`/wallet/withdraw/status?status=pending&page=${page}`);
-      setRefunds(response.data.content);
-      setTotalElements(response.data.totalElements);
+      setRefunds(response.data);
+      setTotalElements(response.data.length);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -41,6 +47,7 @@ const AuctionRequestManagement = () => {
     }
   };
 
+  // Effect to fetch the data based on whether it's a refund or auction request
   useEffect(() => {
     if (isRefund) {
       fetchRefunds(currentPage);
@@ -49,149 +56,150 @@ const AuctionRequestManagement = () => {
     }
   }, [currentPage, isRefund]);
 
+  // Handle Action (Approve, Reject, Complete Refund)
   const handleAction = async (action) => {
     if (!selectedRequest) return;
 
     try {
       const endpoint = isRefund
-        ? `/wallet/withdraw/complete/${selectedRequest.id}` // For refund action
-        : `/auction/staff/auction/${selectedRequest.auctionId}?action=${action}`; // For auction action
+        ? `/wallet/withdraw/complete/${selectedRequest.id}`
+        : `/auction/staff/auction/${selectedRequest.auction.id}?action=${action}`;
 
       const response = await api.post(endpoint);
+
       if (response.status === 200) {
         message.success(`${action} successfully`);
         setIsModalVisible(false);
-        fetchRefunds(currentPage); // Or fetchRequests if in auction mode
+        setIsConfirmVisible(false);
+        if (isRefund) {
+          fetchRefunds(currentPage);
+        } else {
+          fetchRequests(currentPage);
+        }
       }
     } catch (error) {
       message.error(`Failed to ${action} request`);
     }
   };
 
+  // Handle Page Change
   const handlePageChange = (page) => {
     setCurrentPage(page - 1);
   };
 
+  // Define Columns for Auction and Refund Requests
   const columns = isRefund
     ? [
         {
-          title: 'Transaction ID',
+          title: t('page.requests.transaction_id'),
           dataIndex: 'id',
           key: 'transactionId',
         },
         {
-          title: 'Wallet ID',
+          title: t('page.requests.wallet_id'),
           dataIndex: ['walletID', 'id'],
           key: 'walletID',
         },
         {
-          title: 'Amount',
+          title: t('page.requests.auction_id'),
+          dataIndex: 'auctionID',
+          key: 'auctionId',
+        },
+        {
+          title: t('page.requests.amount'),
           dataIndex: 'amount',
           key: 'amount',
         },
         {
-          title: 'Time',
-          dataIndex: 'time',
+          title: t('page.requests.time'),
           key: 'time',
-          render: (text) => new Date(text).toLocaleString(),
+          render: (text) => new Date(text.time).toLocaleString(),
         },
         {
-          title: 'Status',
-          dataIndex: 'status',
-          key: 'status',
-        },
-        {
-          title: 'Action',
+          title: t('page.requests.action'),
           key: 'action',
           render: (text) => (
             <Button
               type="primary"
               onClick={() => {
                 setSelectedRequest(text);
-                Modal.confirm({
-                  title: 'Are you sure you want to complete this transaction?',
-                  onOk: () => handleAction('complete'),
-                });
+                setIsConfirmVisible(true); // Show confirm modal for refund
               }}
             >
-              Complete
+              {t('page.requests.completed')}
             </Button>
           ),
         },
       ]
     : [
         {
-          title: 'Auction ID',
+          title: t('page.requests.auction_id'),
           dataIndex: ['auction', 'id'],
           key: 'auctionId',
         },
         {
-          title: 'Koi',
+          title: t('page.requests.koi_details'),
           key: 'koiFish',
-          render: (text) => {
-            return (
-              <>
-                <b>
-                  {text.koiFish && text.koiFish.length > 0 ? (
-                    <FishPopover fishIds={text.koiFish}>Click here</FishPopover>
-                  ) : (
-                    'No Fish Data'
-                  )}
-                </b>
-              </>
-            );
-          },
+          render: (text) => (
+            <b>
+              {text.koiFish && text.koiFish.length > 0 ? (
+                <FishPopover fishIds={text.koiFish}>{t('page.requests.click_here')}</FishPopover>
+              ) : (
+                t('page.requests.no_data')
+              )}
+            </b>
+          ),
         },
         {
-          title: 'Starting Price',
+          title: t('page.requests.starting_price'),
           dataIndex: ['auction', 'startingPrice'],
           key: 'startingPrice',
         },
         {
-          title: 'Buy Now Price',
+          title: t('page.requests.buyout_price'),
           dataIndex: ['auction', 'buyoutPrice'],
           key: 'buyoutPrice',
         },
         {
-          title: 'Bid Step',
+          title: t('page.requests.bid_step'),
           dataIndex: ['auction', 'bidStep'],
           key: 'bidStep',
         },
         {
-          title: 'Auction method',
+          title: t('page.requests.auction_method'),
           dataIndex: ['auction', 'auctionMethod'],
           key: 'auctionMethod',
         },
         {
-          title: 'Start Time',
+          title: t('page.requests.start_time'),
           dataIndex: ['auction', 'startTime'],
           key: 'startTime',
           render: (text) => new Date(text).toLocaleString(),
         },
         {
-          title: 'End Time',
+          title: t('page.requests.end_time'),
           dataIndex: ['auction', 'endTime'],
           key: 'endTime',
           render: (text) => new Date(text).toLocaleString(),
         },
         {
-          title: 'Breeder',
+          title: t('page.requests.breeder_details'),
           dataIndex: ['auction', 'breederID'],
           key: 'breederID',
           render: (text) => <UserPopover userId={text} />,
         },
         {
-          title: 'Action',
+          title: t('page.requests.action'),
           key: 'action',
           render: (text) => (
             <Button
               type="primary"
               onClick={() => {
                 setSelectedRequest(text);
-                setIsModalVisible(true);
+                setIsModalVisible(true); // Show approve/reject modal for auction
               }}
             >
-              Manage Request
+              {t('page.requests.approve_reject')}
             </Button>
           ),
         },
@@ -200,8 +208,8 @@ const AuctionRequestManagement = () => {
   return (
     <div>
       <Radio.Group onChange={(e) => setIsRefund(e.target.value)} value={isRefund} style={{ marginBottom: '20px' }}>
-        <Radio value={false}>Auction Requests</Radio>
-        <Radio value={true}>Refund Requests</Radio>
+        <Radio value={false}>{t('page.requests.auction_requests')}</Radio>
+        <Radio value={true}>{t('page.requests.refund_requests')}</Radio>
       </Radio.Group>
 
       {loading ? (
@@ -221,12 +229,24 @@ const AuctionRequestManagement = () => {
         </>
       )}
 
+      {/* ApproveAuction Modal */}
       <ApproveAuction
         visible={isModalVisible}
-        onApprove={handleAction}
-        onReject={handleAction}
+        onApprove={() => handleAction('approve')}
+        onReject={() => handleAction('reject')}
         onCancel={() => setIsModalVisible(false)}
         auction={selectedRequest}
+      />
+
+      {/* ConfirmModal for Refund */}
+      <ConfirmModal
+        visible={isConfirmVisible}
+        title="Are you sure you want to complete this transaction?"
+        onConfirm={() => handleAction('complete')}
+        onCancel={() => {
+          message.error('Action canceled');
+          setIsConfirmVisible(false);
+        }}
       />
     </div>
   );
