@@ -19,11 +19,74 @@
       "dark": "Dark",
       "light": "Light"
     },
-    "breadcumb": {},
-    "modal": {},
-    "popover": {},
-    "popup": {},
-    "tooltip": {},
+    "breadcrumb": {
+      "dashboard": "Dashboard",
+      "management": "Management",
+      "requests": "Requests",
+      "auctions": "Auctions",
+      "transactions": "Transactions",
+      "users": "Users",
+      "services": "Services",
+      "chat": "Chat",
+      "email": "Email",
+      "blogs": "Blogs",
+      "settings": "Settings",
+      "orders": "Orders",
+      "setting": "Setting",
+      "profile": "Profile"
+    },
+    "modal": {
+      "update_role": "Update Role",
+      "cancel": "Cancel",
+      "update": "Update",
+      "select_new_role": "Select new role",
+      "user_role": "User",
+      "staff_role": "Staff",
+      "breeder_role": "Breeder",
+      "admin_role": "Admin",
+      "create_blog_title": "Create Blog",
+      "blog_title": "Title",
+      "blog_content": "Content",
+      "blog_preview_images": "Preview Images",
+      "blog_upload": "Upload",
+      "no": "No",
+      "yes": "Yes",
+      "confirm_message": "Are you sure you want to do this process?",
+      "approve": "Approve",
+      "reject": "Reject",
+      "fish_id": "Fish ID",
+      "breeder_id": "Breeder ID",
+      "starting_price": "Starting Price",
+      "buyout_price": "Buyout Price",
+      "bid_step": "Bid Step",
+      "confirm_approve_auction_message": "Are you sure you want to approve or reject this auction?",
+      "no_data": "No data"
+    },
+    "popover": {
+      "fetch_data_failed": "Failed to fetch data",
+      "unknow_name": "Unknow",
+      "id": "ID",
+      "type": "Type",
+      "country": "Country",
+      "weight": "Weight",
+      "length": "Length",
+      "sex": "Sex",
+      "description": "Description",
+      "no_data": "No data",
+      "email": "Email",
+      "phone_number": "Phone Number",
+      "role": "Role",
+      "chat_button": "Chat",
+      "mail_button": "Mail",
+      "role_Admin": "Admin",
+      "role_User": "User",
+      "role_Staff": "Staff",
+      "role_Breeder": "Breeder"
+    },
+    "popup": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
     "password_change_drawer": {
       "title": "Change Password",
       "current_password": "Current Password",
@@ -45,6 +108,13 @@
       "password_length_error": "Password must be at least 8 characters long!",
       "password_max_length_error": "Cannot exceed 100 characters!",
       "new_password_match_error": "New passwords do not match!"
+    },
+    "truncatedcontent": {
+      "show_more": "Show more",
+      "show_less": "Show less"
+    },
+    "autoComplete": {
+      "placeholder": "Search . . ."
     }
   },
   "page": {
@@ -72,7 +142,48 @@
       "password": "Password",
       "change_password": "Change Password"
     },
-    "dashboard": {},
+    "login": {
+      "access_denied": "Access Denied !",
+      "access_denied_desc": "You don't have permission to access this page.",
+      "login_failed": "Login Failed",
+      "login_failed_desc": "Your username or password is incorrect. Please try again.",
+      "sign_in_now": "SIGN IN NOW",
+      "desc": "Enter your username or email and password to access the admin panel.",
+      "please_input_email_or_email": "Please input username or email!",
+      "enter_email_or_email": "Enter your username or email",
+      "please_input_password": "Please input password!",
+      "enter_password": "Enter password",
+      "sign_in_submit": "Sign In",
+      "forgot_password": "Forgot password?"
+    },
+    "dashboard": {
+      "fetch_data_failed": "Failed to fetch data",
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December",
+      "transactions": "Transactions",
+      "assending": "Assending",
+      "descending": "Descending",
+      "another": "Another",
+      "auctions": "Auctions",
+      "day": "Day",
+      "month": "Month",
+      "year": "Year",
+      "submit": "Submit",
+      "new_users": "New Users",
+      "revenue": "Revenue",
+      "no_data": "No data available",
+      "finished_auctions": "Finished Auctions"
+    },
     "requests": {
       "auction_requests": "Auction Requests",
       "refund_requests": "Refund Requests",
@@ -93,7 +204,11 @@
       "wallet_id": "Wallet ID",
       "amount": "Amount",
       "completed": "Completed",
-      "time": "Time"
+      "time": "Time",
+      "method_Ascending": "Ascending",
+      "method_Descending": "Descending",
+      "method_Fixed-price": "Fixed Price",
+      "method_First-come": "First Income"
     },
     "auctions": {
       "fish_details": "Fish Details",
@@ -113,13 +228,14 @@
       "no_data": "No fish data",
       "status_Rejected": "Rejected",
       "status_Closed": "Closed",
-      "status_On-going": "On-going",
+      "status_Ongoing": "On-going",
       "status_Pending": "Pending",
-      "status_Schedule": "Schedule",
-      "method_asc": "Ascending",
-      "method_desc": "Descending",
-      "method_fixed-price": "Fixed Price",
-      "method_first-income": "First Income"
+      "status_Scheduled": "Scheduled",
+      "status_Paid": "Paid",
+      "method_Ascending": "Ascending",
+      "method_Descending": "Descending",
+      "method_Fixed-price": "Fixed Price",
+      "method_First-come": "First Income"
     },
     "transactions": {
       "transaction_id": "Transaction ID",
@@ -130,15 +246,16 @@
       "status": "Status",
       "transaction_type": "Transaction Type",
       "total_balance": "Total Balance",
-      "type_all": "All",
-      "type_topup": "Top-Up",
-      "type_deposit": "Deposit",
-      "type_payment": "Payment",
-      "type_withdraw": "Withdraw",
-      "type_completed": "Completed",
-      "type_pending": "Pending",
       "fetch_data": "Fetch Data",
-      "export_to_excel": "Export to excel"
+      "export_to_excel": "Export to excel",
+      "type_All": "All",
+      "stauts_completed": "Completed",
+      "status_pending": "Pending",
+      "type_Deposit": "Deposit",
+      "type_Top-up": "Top-Up",
+      "type_Payment": "Payment",
+      "type_Refund": "Refund",
+      "type_Withdraw": "Withdraw"
     },
     "users": {
       "full_name": "Full Name",
@@ -158,7 +275,18 @@
       "status_UnActive": "UnActive",
       "update": "Update",
       "ban_active": "Ban / Active",
-      "new_user": "New User"
+      "new_user": "New User",
+      "ban": "Ban",
+      "active": "Active",
+      "cancelled": "Cancelled",
+      "success": "Success",
+      "error": "Error",
+      "error_update_role_message": "An error occurred while updating user role. Please try again.",
+      "failed_update": "Failed to update user role",
+      "failed_update_message": "An error occurred while updating user role. Please try again.",
+      "active_success_message": "Has been activated successfully user",
+      "ban_success_message": "Has been banned successfully user ",
+      "update_success_message": "Update user role successfully to "
     },
     "chat": {
       "role_Admin": "admin",
@@ -186,7 +314,12 @@
       "confirm_dispute_action": "Are you sure you want to resolve this dispute?"
     },
     "email": {},
-    "blogs": {},
+    "blogs": {
+      "fetch_blog_failed": "Failed to fetch blog data",
+      "fetch_blog_detail_failed": "Failed to fetch blog detail",
+      "back_to_list": "Back to list",
+      "placeholder": "Post something..."
+    },
     "setting": {
       "breeder_deposit": "Breeder Deposit",
       "withdraw_fee": "Withdraw Fee",

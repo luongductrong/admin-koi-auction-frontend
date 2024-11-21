@@ -5,7 +5,7 @@ import { BellFilled, GlobalOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import userStore, { themeStore } from '../../zustand';
 import { useNavigate } from 'react-router-dom';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import i18n from '../../i18n';
 
 const { Header } = Layout;
@@ -18,7 +18,7 @@ const HeaderComponent = React.memo(() => {
   const navigate = useNavigate();
   const fullName = user.fullname;
   const { isDarkMode, toggleTheme } = themeStore();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const handleLanguageChange = (language) => {
     i18n.changeLanguage(language);
@@ -32,6 +32,7 @@ const HeaderComponent = React.memo(() => {
       items={[
         { key: 'en', label: 'English' },
         { key: 'vi', label: 'Tiếng Việt' },
+        { key: 'jp', label: '日本語' },
       ]}
     />
   );
@@ -46,8 +47,8 @@ const HeaderComponent = React.memo(() => {
           <Switch
             checked={isDarkMode}
             onChange={toggleTheme}
-            checkedChildren="Dark"
-            unCheckedChildren="Light"
+            checkedChildren={t('component.header.dark')}
+            unCheckedChildren={t('component.header.light')}
             className={styles['dark-light-switch']}
           />
           <Dropdown overlay={languageMenu} trigger={['click']}>

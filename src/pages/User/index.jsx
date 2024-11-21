@@ -68,7 +68,7 @@ const User = () => {
 
   const handleCancelUpdate = () => {
     notification.error({
-      message: 'Cancelled',
+      message: t('page.users.cancelled'),
     });
     setIsModalVisible(false);
   };
@@ -78,21 +78,21 @@ const User = () => {
       if (newRole) {
         await api.post(`/admin-manager/users/update-role/${currentUserId}?role=${newRole}`);
         notification.success({
-          message: 'Success',
-          description: `User role updated to ${newRole}`,
+          message: t('page.users.success'),
+          description: `${t('page.users.update_success_message')} ${t(`page.users.role_${newRole}`)}`,
         });
         setIsModalVisible(false);
         fetchUsers(); // Fetch lại danh sách users sau khi cập nhật
       } else {
         notification.error({
-          message: 'Error',
-          description: 'Please select a role to update.',
+          message: t('page.users.error'),
+          description: t('page.users.error_update_role_message'),
         });
       }
     } catch (error) {
       notification.error({
-        message: 'Error',
-        description: 'Failed to update user role.',
+        message: t('page.users.failed'),
+        description: t('page.users.failed_update_message'),
       });
     }
   };
@@ -111,16 +111,16 @@ const User = () => {
           status: 'Unactive',
         });
         notification.success({
-          message: 'Success',
-          description: `Banned: ${currentName} (ID: ${currentUserId})`,
+          message: t('page.users.success'),
+          description: `${t('page.users.ban_success_message')}: ${currentName} (ID: ${currentUserId})`,
         });
       } else {
         await api.post(`/admin-manager/users/active-user/${currentUserId}`, {
           status: 'Active',
         });
         notification.success({
-          message: 'Success',
-          description: `Actived: ${currentName} (ID: ${currentUserId})`,
+          message: t('page.users.success'),
+          description: `${t('page.users.active_success_message')}: ${currentName} (ID: ${currentUserId})`,
         });
       }
       fetchUsers();
@@ -131,7 +131,7 @@ const User = () => {
 
   const handleCancelBan = () => {
     notification.error({
-      message: 'Cancelled',
+      message: t('page.users.cancelled'),
     });
     setIsPopupVisible(false);
   };
@@ -236,7 +236,11 @@ const User = () => {
         open={isPopupVisible}
         onConfirm={handleConfirmBan}
         onCancel={handleCancelBan}
-        content={currStatus === 'Active' ? `Ban ${currentName}?` : `Active ${currentName}?`}
+        content={
+          currStatus === 'Active'
+            ? `${t('page.users.ban')} ${currentName}?`
+            : `${t('page.users.active')} ${currentName}?`
+        }
       />
     </div>
   );

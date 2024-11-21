@@ -104,8 +104,20 @@ const TransactionManagement = () => {
       render: (text) => new Date(text).toLocaleString(),
     },
     { title: t('page.transactions.auction_id'), dataIndex: 'auctionID' },
-    { title: t('page.transactions.status'), dataIndex: 'status' },
-    { title: t('page.transactions.transaction_type'), dataIndex: 'transactionType', render: (text) => text || 'N/A' },
+    {
+      title: t('page.transactions.status'),
+      dataIndex: 'status',
+      // render: (text) => {
+      //   t(`page.transactions.stauts_${text}`);
+      // },
+    },
+    {
+      title: t('page.transactions.transaction_type'),
+      dataIndex: 'transactionType',
+      // render: (text) => {
+      //   t(`page.transactions.type_${text}`);
+      // },
+    },
   ];
 
   return (
@@ -126,16 +138,16 @@ const TransactionManagement = () => {
             onChange={(e) => setWalletId(e.target.value)}
           />
           <Select value={transactionType} onChange={(value) => setTransactionType(value)} style={{ width: 120 }}>
-            <Option value="All">{t('page.transactions.type_all')}</Option>
-            <Option value="Top-up">{t('page.transactions.type_topup')}</Option>
-            <Option value="Deposit">{t('page.transactions.type_deposit')}</Option>
-            <Option value="Payment">{t('page.transactions.type_payment')}</Option>
-            <Option value="Withdraw">{t('page.transactions.type_withdraw')}</Option>
+            <Option value="All">{t('page.transactions.type_All')}</Option>
+            <Option value="Top-up">{t('page.transactions.type_Top-up')}</Option>
+            <Option value="Deposit">{t('page.transactions.type_Deposit')}</Option>
+            <Option value="Payment">{t('page.transactions.type_Payment')}</Option>
+            <Option value="Withdraw">{t('page.transactions.type_Withdraw')}</Option>
           </Select>
           <Select value={status} onChange={(value) => setStatus(value)} style={{ width: 120 }}>
-            <Option value="All">{t('page.transactions.type_all')}</Option>
-            <Option value="Completed">{t('page.transactions.type_completed')}</Option>
-            <Option value="Pending">{t('page.transactions.type_pending')}</Option>
+            <Option value="All">{t('page.transactions.type_All')}</Option>
+            <Option value="Completed">{t('page.transactions.type_Completed')}</Option>
+            <Option value="Pending">{t('page.transactions.type_Pending')}</Option>
           </Select>
           <Slider
             range

@@ -162,7 +162,7 @@ const AuctionRequestManagement = () => {
         {
           title: t('page.requests.auction_method'),
           dataIndex: ['auction', 'auctionMethod'],
-          key: 'auctionMethod',
+          render: (text) => <>{t(`page.request.method_${text}`)}</>,
         },
         {
           title: t('page.requests.start_time'),

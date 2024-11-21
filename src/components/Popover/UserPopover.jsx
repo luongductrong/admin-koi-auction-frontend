@@ -3,8 +3,10 @@ import { Popover, Avatar, Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const UserPopover = ({ userId, children }) => {
+  const { t } = useTranslation();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +17,7 @@ const UserPopover = ({ userId, children }) => {
         const res = await api.get(`/admin-manager/users/get-user/${userId}`, {});
         setUserData(res.data);
       } catch (error) {
-        setUserData('Failed to fetch user data');
+        setUserData(t('component.popover.fetch_data_failed'));
         console.error('Failed to fetch user data', error);
       } finally {
         setLoading(false);
@@ -71,25 +73,25 @@ const UserPopover = ({ userId, children }) => {
         </div>
       </div>
       <p>
-        <b>Email:</b> {userData.email}
+        <b>{t('component.popover.email')}:</b> {userData.email}
       </p>
       <p>
-        <b>Phone:</b> {userData.phoneNumber}
+        <b>{t('component.popover.phone_number')}:</b> {userData.phoneNumber}
       </p>
       <p>
-        <b>Role:</b> {userData.role}
+        <b>{t('component.popover.role')}:</b> {t(`component.popover.role_${userData.role}`)}
       </p>
       <div className={styles.actions}>
         <Button type="primary" className={styles['chat-button']}>
-          Chat
+          {t('component.popover.chat_button')}
         </Button>
         <Button type="default" className={styles['mail-button']}>
-          Mail
+          {t('component.popover.mail_button')}
         </Button>
       </div>
     </div>
   ) : (
-    'No data available'
+    t('component.popover.no_data')
   );
 
   return (

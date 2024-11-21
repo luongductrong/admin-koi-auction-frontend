@@ -4,6 +4,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import enTranslation from "./locales/en/translation.json";
 import viTranslation from "./locales/vi/translation.json";
+import jpTranslation from "./locales/jp/translation.json";
+
 
 i18n
     .use(LanguageDetector) // Sử dụng LanguageDetector để tự động phát hiện ngôn ngữ từ trình duyệt
@@ -19,6 +21,7 @@ i18n
         resources: {
             en: { translation: enTranslation },
             vi: { translation: viTranslation },
+            jp: { translation: jpTranslation },
         },
     });
 

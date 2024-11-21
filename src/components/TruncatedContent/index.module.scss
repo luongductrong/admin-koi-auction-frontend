@@ -1,0 +1,16 @@
+.content {
+  font-size: 1em;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.readMore {
+  color: #0084ff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.readMore:hover {
+  color: #22588a;
+}

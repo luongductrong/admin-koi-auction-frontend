@@ -1,9 +1,11 @@
 import React from 'react';
 import { AutoComplete } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const AutoCompleteComponent = ({ contacts, currChat, setCurrChat, searchValue, setSearchValue }) => {
   console.log('Render ContactAutoComplete');
-  // Tạo list cho AutoComplete dựa trên searchValue
+  const { t } = useTranslation();
+
   const options = contacts
     .filter((contact) => contact.fullName.toLowerCase().includes(searchValue.toLowerCase()))
     .map((contact) => ({
@@ -30,7 +32,7 @@ const AutoCompleteComponent = ({ contacts, currChat, setCurrChat, searchValue, s
     <AutoComplete
       options={options}
       style={{ width: '100%' }}
-      placeholder="Search..."
+      placeholder={t('component.autoComplete.placeholder')}
       onSelect={handleSelect}
       onSearch={setSearchValue}
       value={searchValue}
