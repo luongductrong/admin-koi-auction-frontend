@@ -88,6 +88,7 @@ const Auction = () => {
     {
       title: t('page.auctions.auction_method'),
       dataIndex: ['auction', 'auctionMethod'],
+      render: (text) => <>{t(`page.auctions.method_${text}`)}</>,
     },
     {
       title: t('page.auctions.starting_price'),
@@ -135,6 +136,9 @@ const Auction = () => {
           case 'Scheduled':
             color = 'green';
             break;
+          case 'Paid':
+            color = 'cyan';
+            break;
           case 'Pending':
             color = 'orange';
             break;
@@ -144,8 +148,7 @@ const Auction = () => {
           default:
             color = 'gray';
         }
-        return <Tag color={color}>{toUpperCase2(status)}</Tag>;
-        // return <Tag color={color}>{toUpperCase2(t(`status_${status}`))}</Tag>;
+        return <Tag color={color}>{toUpperCase2(t(`page.auctions.status_${status}`))}</Tag>;
       },
     },
   ];

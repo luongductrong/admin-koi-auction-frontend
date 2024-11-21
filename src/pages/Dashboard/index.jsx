@@ -5,6 +5,7 @@ import { Form, Button, Input, Card, Statistic, ConfigProvider, message } from 'a
 import { UsergroupAddOutlined, DollarOutlined, ShoppingCartOutlined, LinuxOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 
 Chart.register(...registerables);
 
@@ -28,6 +29,7 @@ const LineChart = React.memo(({ data }) => (
 ));
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [summaryData, setSummaryData] = useState(null);
 
   const currDate = new Date();
@@ -74,7 +76,7 @@ const Dashboard = () => {
       setAuctionData(auctionCounts);
       setTransactionData(transactionCounts);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error(t('page.dashboard.fetch_data_failed'), error);
       // Fallback nếu có lỗi, điền 0 vào tất cả các tháng
       setAuctionData(Array(12).fill(0));
       setTransactionData(Array(12).fill(0));
@@ -88,28 +90,28 @@ const Dashboard = () => {
   const chartData = {
     line: {
       labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
+        t('page.dashboard.january'),
+        t('page.dashboard.february'),
+        t('page.dashboard.march'),
+        t('page.dashboard.april'),
+        t('page.dashboard.may'),
+        t('page.dashboard.june'),
+        t('page.dashboard.july'),
+        t('page.dashboard.august'),
+        t('page.dashboard.september'),
+        t('page.dashboard.october'),
+        t('page.dashboard.november'),
+        t('page.dashboard.december'),
       ],
       datasets: [
         {
-          label: 'Transactions',
+          label: t('page.dashboard.transactions'),
           data: transactionData,
         },
       ],
     },
     pie: {
-      labels: ['Assending', 'Descending', 'Another'],
+      labels: [t('page.dashboard.assending'), t('page.dashboard.descending'), t('page.dashboard.another')],
       datasets: [
         {
           data: [300, 100, 50],
@@ -118,22 +120,22 @@ const Dashboard = () => {
     },
     col: {
       labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
+        t('page.dashboard.january'),
+        t('page.dashboard.february'),
+        t('page.dashboard.march'),
+        t('page.dashboard.april'),
+        t('page.dashboard.may'),
+        t('page.dashboard.june'),
+        t('page.dashboard.july'),
+        t('page.dashboard.august'),
+        t('page.dashboard.september'),
+        t('page.dashboard.october'),
+        t('page.dashboard.november'),
+        t('page.dashboard.december'),
       ],
       datasets: [
         {
-          label: 'Auctions',
+          label: t('page.dashboard.auctions'),
           data: auctionData,
         },
       ],
@@ -145,7 +147,7 @@ const Dashboard = () => {
       const response = await api.get('/dashboard', { params: filters });
       setSummaryData(response.data);
     } catch (error) {
-      message.error('Failed to fetch summary data');
+      message.error(t('page.dashboard.fetch_data_failed'));
     }
   };
   useEffect(() => {
@@ -165,18 +167,18 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboard}>
       <Form layout="inline" className={styles.filterForm} onFinish={onFinish} initialValues={dateFilters}>
-        <Form.Item name="day" label="Day">
+        <Form.Item name="day" label={t('page.dashboard.day')}>
           <Input type="number" min={1} max={31} />
         </Form.Item>
-        <Form.Item name="month" label="Month">
+        <Form.Item name="month" label={t('page.dashboard.month')}>
           <Input type="number" min={1} max={12} />
         </Form.Item>
-        <Form.Item name="year" label="Year">
+        <Form.Item name="year" label={t('page.dashboard.year')}>
           <Input type="number" min={2000} max={currYear} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Submit
+            {t('page.dashboard.submit')}
           </Button>
         </Form.Item>
       </Form>
@@ -194,15 +196,23 @@ const Dashboard = () => {
               token: { colorText: 'var(--primary-color)' },
             }}
           >
-            <SummaryCard label="New Users" value={summaryData.newUserCount} icon={<UsergroupAddOutlined />} />
             <SummaryCard
-              label="Revenue"
-              value={summaryData.revenue !== null ? summaryData.revenue : 'No Data Available'}
+              label={t('page.dashboard.new_users')}
+              value={summaryData.newUserCount}
+              icon={<UsergroupAddOutlined />}
+            />
+            <SummaryCard
+              label={t('page.dashboard.revenue')}
+              value={summaryData.revenue !== null ? summaryData.revenue : t('page.dashboard.no_data')}
               icon={<DollarOutlined />}
             />
-            <SummaryCard label="Auctions" value={summaryData.auctionCount} icon={<LinuxOutlined />} />
             <SummaryCard
-              label="Finished Auctions"
+              label={t('page.dashboard.auctions')}
+              value={summaryData.auctionCount}
+              icon={<LinuxOutlined />}
+            />
+            <SummaryCard
+              label={t('page.dashboard.finished_auctions')}
               value={summaryData.finishedAuctionCount}
               icon={<ShoppingCartOutlined />}
             />

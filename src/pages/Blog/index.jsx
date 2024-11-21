@@ -8,8 +8,10 @@ import userStore from '../../zustand';
 import UserPopover from '../../components/Popover/UserPopover';
 import TruncatedContent from '../../components/TruncatedContent';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 const Blog = () => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [text, setText] = useState('');
@@ -37,7 +39,7 @@ const Blog = () => {
         setTotalPosts(res.data.totalElements);
       }
     } catch (error) {
-      message.error('Failed to fetch blog posts');
+      message.error(t('page.blogs.fetch_blog_failed'));
     } finally {
       setLoading(false);
     }
@@ -53,7 +55,7 @@ const Blog = () => {
       const res = await api.get(`/blogs/${post.id}`);
       setSelectedPost(res.data);
     } catch (error) {
-      message.error('Failed to fetch post details');
+      message.error(t('page.blogs.fetch_blog_detail_failed'));
     }
   };
 
@@ -112,68 +114,68 @@ const Blog = () => {
       </div>
 
       <Button type="primary" onClick={() => setSelectedPost(null)}>
-        Back to list
+        {t('page.blogs.back_to_list')}
       </Button>
     </>
   );
 
-  // const handlePostSubmit = () => {
-  //   if ((title && text) || images.length) {
-  //     const newPost = {
-  //       title,
-  //       content: text,
-  //       authorName: user.fullname,
-  //       userId: user.userId,
-  //       images: images.map((file) => ({
-  //         url: URL.createObjectURL(file.originFileObj),
-  //       })),
-  //       createdAt: new Date().toISOString(),
-  //     };
-
-  //     setPosts([newPost, ...posts]);
-  //     setTitle('');
-  //     setText('');
-  //     setImages([]);
-  //     setIsModalVisible(false);
-  //   }
-  // };
-
-  const handlePostSubmit = async () => {
+  const handlePostSubmit = () => {
     if ((title && text) || images.length) {
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('content', text);
-      images.forEach((file) => {
-        formData.append('images', file.originFileObj);
-      });
+      const newPost = {
+        title,
+        content: text,
+        authorName: user.fullname,
+        userId: user.userId,
+        images: images.map((file) => ({
+          url: URL.createObjectURL(file.originFileObj),
+        })),
+        createdAt: new Date().toISOString(),
+      };
 
-      setLoading(true);
-
-      console.log('FormData content:');
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
-
-      try {
-        const res = await api.post('/blogs', formData);
-
-        if (res.data) {
-          setPosts([res.data, ...posts]);
-          setTitle('');
-          setText('');
-          setImages([]);
-          setIsModalVisible(false);
-          message.success('Post successfully created!');
-        }
-      } catch (error) {
-        message.error('Failed to create the post');
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      message.warning('Please fill in the title or content');
+      setPosts([newPost, ...posts]);
+      setTitle('');
+      setText('');
+      setImages([]);
+      setIsModalVisible(false);
     }
   };
+
+  // const handlePostSubmit = async () => {
+  //   if ((title && text) || images.length) {
+  //     const formData = new FormData();
+  //     formData.append('title', title);
+  //     formData.append('content', text);
+  //     images.forEach((file) => {
+  //       formData.append('images', file.originFileObj);
+  //     });
+
+  //     setLoading(true);
+
+  //     console.log('FormData content:');
+  //     formData.forEach((value, key) => {
+  //       console.log(key, value);
+  //     });
+
+  //     try {
+  //       const res = await api.post('/blogs', formData);
+
+  //       if (res.data) {
+  //         setPosts([res.data, ...posts]);
+  //         setTitle('');
+  //         setText('');
+  //         setImages([]);
+  //         setIsModalVisible(false);
+  //         message.success('Post successfully created!');
+  //       }
+  //     } catch (error) {
+  //       message.error('Failed to create the post');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   } else {
+  //     message.warning('Please fill in the title or content');
+  //   }
+  // };
 
   return (
     <div style={{ padding: '24px' }}>
@@ -181,7 +183,7 @@ const Blog = () => {
         ''
       ) : (
         <div className={styles.input}>
-          <Input placeholder="Post anything . . ." onClick={() => setIsModalVisible(true)} readOnly />
+          <Input placeholder={t('page.blogs.placeholder')} onClick={() => setIsModalVisible(true)} readOnly />
         </div>
       )}
 

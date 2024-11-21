@@ -3,10 +3,12 @@ import { Popover, List, Spin, Button } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const defaultImage = '/src/assets/defaultKoi.jpg';
 
 const FishPopover = ({ fishIds, children }) => {
+  const { t } = useTranslation();
   const [fishData, setFishData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,7 +25,7 @@ const FishPopover = ({ fishIds, children }) => {
         );
         setFishData(fishDetails);
       } catch (error) {
-        setFishData('Failed to fetch fish data');
+        setFishData(t('component.popover.fetch_data_failed'));
         console.error('Failed to fetch fish data', error);
       } finally {
         setLoading(false);
@@ -80,29 +82,29 @@ const FishPopover = ({ fishIds, children }) => {
 
       <List.Item>
         <List.Item.Meta
-          title={<b>{fishData[currentIndex].koiName || 'Unknown Name'}</b>}
+          title={<b>{fishData[currentIndex].koiName || t('component.popover.unknow_name')}</b>}
           description={
             <div className={styles.listDescription}>
               <p>
-                <b>ID:</b> {fishData[currentIndex].koiId}
+                <b>{t('component.popover.id')}:</b> {fishData[currentIndex].koiId}
               </p>
               <p>
-                <b>Type:</b> {fishData[currentIndex].koiTypeName}
+                <b>{t('component.popover.type')}:</b> {fishData[currentIndex].koiTypeName}
               </p>
               <p>
-                <b>Origin:</b> {fishData[currentIndex].koiOriginName}
+                <b>{t('component.popover.country')}:</b> {fishData[currentIndex].koiOriginName}
               </p>
               <p>
-                <b>Weight:</b> {fishData[currentIndex].weight} kg
+                <b>{t('component.popover.weight')}:</b> {fishData[currentIndex].weight} kg
               </p>
               <p>
-                <b>Sex:</b> {fishData[currentIndex].sex}
+                <b>{t('component.popover.sex')}:</b> {fishData[currentIndex].sex}
               </p>
               <p>
-                <b>Length:</b> {fishData[currentIndex].length} cm
+                <b>{t('component.popover.length')}:</b> {fishData[currentIndex].length} cm
               </p>
               <p>
-                <b>Description:</b> {fishData[currentIndex].description}
+                <b>{t('component.popover.description')}:</b> {fishData[currentIndex].description}
               </p>
             </div>
           }
@@ -112,7 +114,7 @@ const FishPopover = ({ fishIds, children }) => {
   ) : loading ? (
     <Spin />
   ) : (
-    'No data available'
+    t('component.popover.no_data')
   );
 
   return (

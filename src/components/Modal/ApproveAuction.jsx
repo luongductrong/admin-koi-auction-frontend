@@ -1,8 +1,9 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const ApproveAuction = ({ visible, onApprove, onReject, onCancel, auction }) => {
-  // Kiểm tra auction có tồn tại và có thuộc tính auction không
+  const { t } = useTranslation();
   const auctionData = auction && auction.auction ? auction.auction : null;
 
   return (
@@ -11,35 +12,35 @@ const ApproveAuction = ({ visible, onApprove, onReject, onCancel, auction }) => 
       onCancel={onCancel}
       footer={[
         <Button key="approve" type="primary" onClick={() => onApprove('approve')}>
-          Approve
+          {t('component.modal.approve')}
         </Button>,
         <Button key="reject" type="danger" onClick={() => onReject('reject')}>
-          Reject
+          {t('component.modal.reject')}
         </Button>,
       ]}
     >
       {auctionData ? (
         <div>
           <p>
-            <strong>Fish ID: </strong> {auctionData.id}
+            <strong>{t('component.modal.fish_id')}: </strong> {auctionData.id}
           </p>
           <p>
-            <strong>Breeder ID:</strong> {auctionData.breederID}
+            <strong>{t('component.modal.breeder_id')}:</strong> {auctionData.breederID}
           </p>
           <p>
-            <strong>Starting Price:</strong> {auctionData.startingPrice}
+            <strong>{t('component.modal.starting_price')}:</strong> {auctionData.startingPrice}
           </p>
           <p>
-            <strong>Buy Now Price:</strong> {auctionData.buyoutPrice}
+            <strong>{t('component.modal.buyout_price')}:</strong> {auctionData.buyoutPrice}
           </p>
           <p>
-            <strong>Bid Step:</strong> {auctionData.bidStep}
+            <strong>{t('component.modal.bid_step')}:</strong> {auctionData.bidStep}
           </p>
 
-          <p>Are you sure you want to approve or reject this auction?</p>
+          <p>{t('component.modal.confirm_approve_auction_message')}</p>
         </div>
       ) : (
-        <p>No auction data available</p>
+        <p>{t('component.modal.no_data')}</p>
       )}
     </Modal>
   );

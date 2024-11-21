@@ -16,14 +16,76 @@
       "orders": "Đơn hàng"
     },
     "header": {
-      "dark": "Chế độ tối",
-      "light": "Chế độ sáng"
+      "dark": "Tối",
+      "light": "Sáng"
     },
-    "breadcumb": {},
-    "modal": {},
-    "popover": {},
-    "popup": {},
-    "tooltip": {},
+    "breadcrumb": {
+      "dashboard": "Trang chủ",
+      "management": "Quản lý",
+      "requests": "Yêu cầu",
+      "auctions": "Cuộc đấu giá",
+      "transactions": "Giao dịch",
+      "users": "Người dùng",
+      "services": "Dịch vụ",
+      "chat": "Nhắn tin",
+      "email": "Email",
+      "blogs": "Bài viết",
+      "settings": "Cài đặt",
+      "orders": "Đơn hàng",
+      "profile": "Trang cá nhân"
+    },
+    "modal": {
+      "update_role": "Cập nhật vai trò",
+      "cancel": "Hủy",
+      "update": "Cập nhật",
+      "select_new_role": "Chọn vai trò mới",
+      "user_role": "Người dùng",
+      "staff_role": "Nhân viên",
+      "breeder_role": "Chủ trang trại",
+      "admin_role": "Quản trị viên",
+      "create_blog_title": "Tạo bài viết",
+      "blog_title": "Tiêu đề",
+      "blog_content": "Nội dung",
+      "blog_preview_images": "Ảnh xem trước",
+      "blog_upload": "Tải lên",
+      "no": "Không",
+      "yes": "Có",
+      "confirm_message": "Bạn có chắc chắn muốn thực hiện hành động này không?",
+      "approve": "Duyệt",
+      "reject": "Từ chối",
+      "fish_id": "Mã số cá",
+      "breeder_id": "Mã số chủ trang trại",
+      "starting_price": "Giá khởi điểm",
+      "buyout_price": "Giá mua ngay",
+      "bid_step": "Bước giá",
+      "confirm_approve_auction_message": "Bạn có chắc chắn muốn duyệt / từ chối cuộc đấu giá này không?",
+      "no_data": "Không có dữ liệu"
+    },
+    "popover": {
+      "fetch_data_failed": "Không thể tải dữ liệu",
+      "unknow_name": "Không có tên",
+      "id": "Mã số",
+      "type": "Loại",
+      "country": "Quốc gia",
+      "weight": "Trọng lượng",
+      "length": "Chiều dài",
+      "sex": "Giới tính",
+      "description": "Mô tả",
+      "no_data": "Không có dữ liệu",
+      "email": "Email",
+      "phone_number": "Số điện thoại",
+      "role": "Chức vụ",
+      "chat_button": "Nhắn tin",
+      "mail_button": "Mail",
+      "role_Admin": "Quản trị viên",
+      "role_User": "Người dùng",
+      "role_Staff": "Nhân viên",
+      "role_Breeder": "Chủ trang trại"
+    },
+    "popup": {
+      "confirm": "Xác nhận",
+      "cancel": "Hủy"
+    },
     "password_change_drawer": {
       "title": "Đổi mật khẩu",
       "current_password": "Mật khẩu hiện tại",
@@ -45,6 +107,13 @@
       "password_length_error": "Mật khẩu phải có ít nhất 8 ký tự!",
       "password_max_length_error": "Không được vượt quá 100 ký tự!",
       "new_password_match_error": "Mật khẩu mới không khớp!"
+    },
+    "truncatedcontent": {
+      "show_more": "Đọc thêm",
+      "show_less": "Thu gọn"
+    },
+    "autoComplete": {
+      "placeholder": "Tìm kiếm . . ."
     }
   },
   "page": {
@@ -89,7 +158,34 @@
       "approve": "Duyệt",
       "confirm_dispute_action": "Xác nhận hành động tranh chấp"
     },
-    "dashboard": {},
+    "dashboard": {
+      "fetch_data_failed": "Không thể tải dữ liệu",
+      "january": "Tháng 1",
+      "february": "Tháng 2",
+      "march": "Tháng 3",
+      "april": "Tháng 4",
+      "may": "Tháng 5",
+      "june": "Tháng 6",
+      "july": "Tháng 7",
+      "august": "Tháng 8",
+      "september": "Tháng 9",
+      "october": "Tháng 10",
+      "november": "Tháng 11",
+      "december": "Tháng 12",
+      "transactions": "Giao dịch",
+      "assending": "Tăng dần",
+      "descending": "Giảm dần",
+      "another": "Khác",
+      "auctions": "Cuộc đấu giá",
+      "day": "Ngày",
+      "month": "Tháng",
+      "year": "Năm",
+      "submit": "Gửi",
+      "new_users": "Người dùng mới",
+      "revenue": "Doanh thu",
+      "no_data": "Không có dữ liệu",
+      "finished_auctions": "Cuộc đấu giá đã hoàn thành"
+    },
     "requests": {
       "auction_requests": " Yêu cầu đấu giá",
       "refund_requests": " Yêu cầu hoàn tiền",
@@ -110,7 +206,11 @@
       "wallet_id": "Mã ví",
       "amount": "Số tiền",
       "completed": "Đã hoàn thành",
-      "time": "Thời gian"
+      "time": "Thời gian",
+      "method_Ascending": "Giá tăng dần",
+      "method_Descending": "Giá giảm dần",
+      "method_Fixed-price": "Giá cố định",
+      "method_First-come": "Giá đầu tiên"
     },
     "auctions": {
       "fish_details": "Koi",
@@ -130,13 +230,14 @@
       "no_data": "Không có dữ liệu",
       "status_Rejected": "Từ chối",
       "status_Closed": "Kết thúc",
-      "status_On-going": "Đang diễn ra",
+      "status_Ongoing": "Đang diễn ra",
       "status_Pending": "Đang xử lý",
-      "status_Schedule": "Đã lên lịch",
-      "method_asc": "Giá tăng dần",
-      "method_desc": "Giá giảm dần",
-      "method_fixed-price": "Giá cố định",
-      "method_first-income": "Giá đầu tiên"
+      "status_Scheduled": "Đã lên lịch",
+      "status_Paid": "Đã thanh toán",
+      "method_Ascending": "Giá tăng dần",
+      "method_Descending": "Giá giảm dần",
+      "method_Fixed-price": "Giá cố định",
+      "method_First-come": "Giá đầu tiên"
     },
     "transactions": {
       "transaction_id": "Mã giao dịch",
@@ -147,15 +248,16 @@
       "status": "Trạng thái",
       "transaction_type": "Loại giao dịch",
       "total_balance": "Tổng số dư",
-      "type_all": "Tất cả",
-      "type_topup": "Nạp tiền",
-      "type_deposit": "Đặt cọc",
-      "type_payment": "Thanh toán",
-      "type_withdraw": "Rút tiền",
-      "type_completed": "Đã hoàn thành",
-      "type_pending": "Đang xử lý",
       "fetch_data": "Lọc dữ liệu",
-      "export_to_excel": "Xuất ra excel"
+      "export_to_excel": "Xuất ra excel",
+      "stauts_completed": "Hoàn thành",
+      "status_pending": "Đang xử lý",
+      "type_All": "Tất cả",
+      "type_Deposit": "Đặt cọc",
+      "type_Top-up": "Nạp tiền",
+      "type_Payment": "Thanh toán",
+      "type_Refund": "Hoàn tiền",
+      "type_Withdraw": "Rút tiền"
     },
     "users": {
       "full_name": "Họ và tên",
@@ -175,7 +277,16 @@
       "status_UnActive": "Bị khóa",
       "update": "Cập nhật",
       "ban_active": "Khóa / Kích hoạt",
-      "new_user": "Người dùng mới"
+      "new_user": "Người dùng mới",
+      "ban": "Khóa tài khoản ",
+      "active": "Kích hoạt tài khoản ",
+      "cancelled": "Đã Hủy",
+      "success": "Thành công",
+      "error": "Xảy ra lỗi",
+      "error_update_role_message": "Có lỗi xảy ra khi cập nhật vai trò người dùng. Vui lòng thử lại sau.",
+      "active_success_message": "Kích hoạt thành công tài khoản ",
+      "ban_success_message": "Khóa thành công tài khoản ",
+      "update_success_message": "Cập nhật thành công vai trò thành  "
     },
     "chat": {
       "role_Admin": "Quản trị viên",
@@ -185,8 +296,27 @@
       "placeholder": "Nhập tin nhắn...",
       "new_user": "Người dùng mới"
     },
+    "login": {
+      "access_denied": "Truy cập bị từ chối",
+      "access_denied_desc": "Bạn không có quyền truy cập trang này. Vui lòng đăng nhập với tài khoản có quyền truy cập.",
+      "login_failed": "Đăng nhập thất bại",
+      "login_failed_desc": "Tên người dùng hoặc mật khẩu không đúng. Vui lòng thử lại.",
+      "sign_in_now": "ĐĂNG NHẬP NGAY",
+      "desc": "Dùng tên đăng nhập hoặc email và mật khẩu để đăng nhập.",
+      "please_input_email_or_email": "Vui lòng nhập tên người dùng hoặc email!",
+      "enter_email_or_email": "Nhập tên người dùng hoặc email",
+      "please_input_password": "Vui lòng nhập mật khẩu!",
+      "enter_password": "Nhập mật khẩu",
+      "sign_in_submit": "Đăng nhập",
+      "forgot_password": "Quên mật khẩu?"
+    },
     "email": {},
-    "blogs": {},
+    "blogs": {
+      "fetch_blog_failed": "Không thể tải bài viết",
+      "fetch_blog_detail_failed": "Không thể tải chi tiết bài viết",
+      "back_to_list": "Quay lại danh sách",
+      "placeholder": "Bạn đang nghĩ gì?"
+    },
     "setting": {
       "breeder_deposit": "Phí đặt cọc",
       "withdraw_fee": "Phí rút tiền",

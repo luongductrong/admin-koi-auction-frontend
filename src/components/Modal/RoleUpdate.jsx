@@ -1,20 +1,22 @@
 import React from 'react';
 import { Modal, Select, Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
 const RoleUpdate = ({ visible, currentRole, setNewRole, onSubmit, onCancel }) => {
+  const { t } = useTranslation();
   return (
     <Modal
-      title="Update Role"
+      title={t('component.modal.update_role')}
       open={visible}
       onCancel={onCancel}
       footer={[
         <Button key="cancel" onClick={onCancel}>
-          Cancel
+          {t('component.modal.cancel')}
         </Button>,
         <Button key="submit" type="primary" onClick={onSubmit}>
-          Update
+          {t('component.modal.update')}
         </Button>,
       ]}
     >
@@ -23,12 +25,12 @@ const RoleUpdate = ({ visible, currentRole, setNewRole, onSubmit, onCancel }) =>
           defaultValue={currentRole}
           style={{ width: '100%' }}
           onChange={(value) => setNewRole(value)}
-          placeholder="Select new role"
+          placeholder={t('component.modal.select_new_role')}
         >
-          <Option value="User">User</Option>
-          <Option value="Admin">Admin</Option>
-          <Option value="Staff">Staff</Option>
-          <Option value="Breeder">Breeder</Option>
+          <Option value="User">{t('component.modal.user_role')}</Option>
+          <Option value="Admin">{t('component.modal.admin_role')}</Option>
+          <Option value="Staff">{t('component.modal.staff_role')}</Option>
+          <Option value="Breeder">{t('component.modal.breeder_role')}</Option>
         </Select>
       </div>
     </Modal>

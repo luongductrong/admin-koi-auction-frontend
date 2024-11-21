@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const TruncatedContent = ({ text, maxLength = 246 }) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggle = () => {
@@ -15,7 +17,7 @@ const TruncatedContent = ({ text, maxLength = 246 }) => {
       {truncatedText}{' '}
       {text.length > maxLength && (
         <span onClick={handleToggle} className={styles.readMore}>
-          {isExpanded ? 'Show less' : 'Show more'}
+          {isExpanded ? `${t('component.truncatedcontent.show_less')}` : `${t('component.truncatedcontent.show_more')}`}
         </span>
       )}
     </p>
