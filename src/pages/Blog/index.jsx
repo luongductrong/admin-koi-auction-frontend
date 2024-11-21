@@ -1,183 +1,203 @@
 import React, { useState, useEffect } from 'react';
-import { List, Avatar, Pagination, Input, Carousel } from 'antd';
+import { List, Avatar, Pagination, Input, Carousel, message, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
 import PostModal from '../../components/Modal/PostModal';
 import userStore from '../../zustand';
 import UserPopover from '../../components/Popover/UserPopover';
-
-const initialPosts = [
-  {
-    id: 1,
-    userId: 1,
-    author: 'John Doe',
-    title: 'Understanding React Hooks',
-    content:
-      'React Hooks are a new addition in React 16.8 that let you use state and other React features without writing a class.',
-    time: '2024-10-01',
-  },
-  {
-    id: 2,
-    userId: 1,
-    author: 'Jane Smith',
-    title: 'A Guide to CSS Grid',
-    content:
-      'CSS Grid is a two-dimensional layout system for the web, allowing you to design web pages using rows and columns.',
-    time: '2024-10-02',
-  },
-  {
-    id: 3,
-    userId: 1,
-    author: 'Alice Johnson',
-    title: 'JavaScript ES6 Features',
-    content:
-      'ES6 introduced several new features, including let and const, arrow functions, and classes, that improve the way we write JavaScript.',
-    time: '2024-10-03',
-  },
-  {
-    id: 4,
-    userId: 1,
-    author: 'Bob Brown',
-    title: 'Building a RESTful API with Node.js',
-    content:
-      'Learn how to build a RESTful API using Node.js and Express, enabling seamless communication between client and server.',
-    time: '2024-10-04',
-  },
-];
+import TruncatedContent from '../../components/TruncatedContent';
+import { format } from 'date-fns';
 
 const Blog = () => {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
   const [images, setImages] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [posts, setPosts] = useState(initialPosts);
-  // const [posts, setPosts] = useState([]);
-  const pageSize = 2;
+  const [pageSize, setPageSize] = useState(10);
+  const [totalPosts, setTotalPosts] = useState(0);
+  const [posts, setPosts] = useState([]);
   const { user } = userStore();
 
-  const fetchBlogs = async () => {
+  const fetchBlogs = async (page = 1) => {
     setLoading(true);
     try {
-      const res = await api.get('blogs');
-      if (res?.data) {
-        setPosts(res.data);
+      const res = await api.get('/blogs', {
+        params: {
+          page: page - 1,
+          size: pageSize,
+        },
+      });
+
+      if (res?.data?.blogs) {
+        setPosts(res.data.blogs);
+        setTotalPosts(res.data.totalElements);
       }
     } catch (error) {
-      console.error('Failed to fetch blog posts', error);
+      message.error('Failed to fetch blog posts');
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch blog posts
-  // useEffect(() => {
-  //   fetchBlogs();
-  // }, []);
+  useEffect(() => {
+    fetchBlogs(currentPage);
+  }, [currentPage, pageSize]);
 
-  const handlePostClick = (post) => {
+  const handlePostClick = async (post) => {
     setSelectedPost(post);
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    setSelectedPost(null);
-  };
-
-  const handlePostSubmit = () => {
-    if (text || images.length) {
-      const newPost = {
-        userId: user.userId,
-        content: text,
-        images: images.map((file) => ({
-          url: URL.createObjectURL(file.originFileObj),
-        })),
-      };
-      setPosts([newPost, ...posts]);
-      setText('');
-      setImages([]);
-      setIsModalVisible(false);
+    try {
+      const res = await api.get(`/blogs/${post.id}`);
+      setSelectedPost(res.data);
+    } catch (error) {
+      message.error('Failed to fetch post details');
     }
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
   };
-
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-  };
-
-  const currentPosts = posts.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const renderPostList = () => (
     <div>
       <List
-        dataSource={currentPosts}
+        dataSource={posts}
+        loading={loading}
         renderItem={(item) => (
           <List.Item onClick={() => handlePostClick(item)} style={{ cursor: 'pointer' }}>
             <List.Item.Meta
               avatar={<Avatar icon={<UserOutlined />} />}
-              title={<span className="post-title">{item.title}</span>}
-              description={<span>{item.author}</span>}
+              title={
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>{item.title}</span>
+                  <span style={{ fontSize: '0.8em', fontWeight: '400' }}>{formattedDate(item.createdAt)}</span>
+                </div>
+              }
+              description={<span>{item.authorName}</span>}
             />
-            <div>{item.time}</div>
           </List.Item>
         )}
       />
-      <Pagination current={currentPage} pageSize={pageSize} total={posts.length} onChange={handlePageChange} />
+      <Pagination current={currentPage} pageSize={pageSize} total={totalPosts} onChange={handlePageChange} />
     </div>
   );
+
+  const formattedDate = (createdAt) => {
+    if (!createdAt) return 'Invalid date';
+    const date = new Date(createdAt);
+    if (isNaN(date)) return 'Invalid date';
+    return format(date, 'dd-MM-yyyy HH:mm a');
+  };
 
   const renderPostDetails = (selectedPost) => (
     <>
       <UserPopover userId={selectedPost.userId}>
-        <Avatar size={'large'} className={styles.avtPopover} />
-        <b className={styles.name}>Nguyen Van A</b>
+        <Avatar size={'large'} className={styles.userAvatar} />
+        <b className={styles.userName}>{selectedPost.authorName}</b>
+        <span className={styles.createAt}>{formattedDate(selectedPost.createdAt)}</span>
       </UserPopover>
-
-      <div className={styles.content}>
-        <p className={styles.text}>
-          {selectedPost.content.length > 100 ? `${selectedPost.content.substring(0, 100)}...` : selectedPost.content}
-        </p>
-        <Carousel>
-          {selectedPost.images.map((img, idx) => (
-            <img key={idx} src={img.url} alt={`Post ${idx}`} className={styles.image} />
+      <div className={styles.blogDetail}>
+        <div>
+          <TruncatedContent text={selectedPost.content} maxLength={246} />
+        </div>
+        <Carousel draggable="true">
+          {selectedPost?.images?.map((img, idx) => (
+            <img key={idx} src={img.imageUrl} alt={`Post ${idx}`} className={styles.image} />
           ))}
         </Carousel>
       </div>
+
+      <Button type="primary" onClick={() => setSelectedPost(null)}>
+        Back to list
+      </Button>
     </>
   );
 
-  const renderInput = () => (
-    <>
-      <div className={styles.input}>
-        <Input placeholder="Post anything . . ." onClick={showModal} readOnly />
-      </div>
+  // const handlePostSubmit = () => {
+  //   if ((title && text) || images.length) {
+  //     const newPost = {
+  //       title,
+  //       content: text,
+  //       authorName: user.fullname,
+  //       userId: user.userId,
+  //       images: images.map((file) => ({
+  //         url: URL.createObjectURL(file.originFileObj),
+  //       })),
+  //       createdAt: new Date().toISOString(),
+  //     };
+
+  //     setPosts([newPost, ...posts]);
+  //     setTitle('');
+  //     setText('');
+  //     setImages([]);
+  //     setIsModalVisible(false);
+  //   }
+  // };
+
+  const handlePostSubmit = async () => {
+    if ((title && text) || images.length) {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('content', text);
+      images.forEach((file) => {
+        formData.append('images', file.originFileObj);
+      });
+
+      setLoading(true);
+
+      console.log('FormData content:');
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+
+      try {
+        const res = await api.post('/blogs', formData);
+
+        if (res.data) {
+          setPosts([res.data, ...posts]);
+          setTitle('');
+          setText('');
+          setImages([]);
+          setIsModalVisible(false);
+          message.success('Post successfully created!');
+        }
+      } catch (error) {
+        message.error('Failed to create the post');
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      message.warning('Please fill in the title or content');
+    }
+  };
+
+  return (
+    <div style={{ padding: '24px' }}>
+      {selectedPost ? (
+        ''
+      ) : (
+        <div className={styles.input}>
+          <Input placeholder="Post anything . . ." onClick={() => setIsModalVisible(true)} readOnly />
+        </div>
+      )}
+
+      {selectedPost ? renderPostDetails(selectedPost) : renderPostList()}
 
       <PostModal
         visible={isModalVisible}
-        onClose={handleModalClose}
+        onClose={() => setIsModalVisible(false)}
         onSubmit={handlePostSubmit}
+        title={title}
+        setTitle={setTitle}
         text={text}
         setText={setText}
         images={images}
         setImages={setImages}
       />
-    </>
-  );
-
-  return (
-    <div style={{ padding: '24px' }}>
-      {/* input */}
-      {renderInput()}
-
-      {/* content */}
-      {selectedPost ? renderPostDetails() : renderPostList()}
-
-      {/* pagination */}
     </div>
   );
 };

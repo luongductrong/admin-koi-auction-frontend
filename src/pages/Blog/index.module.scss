@@ -4,3 +4,37 @@
   border-radius: 7px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.userAvatar {
+  margin-right: 12px;
+}
+
+.userName {
+  font-size: 1.2em;
+}
+
+.createAt {
+  display: block;
+  margin-left: 53px;
+  margin-top: -8px;
+  font-size: 0.75em;
+  margin-bottom: 20px;
+}
+
+.content {
+  font-size: 1rem;
+  margin-bottom: 16px; /* Khoảng cách với carousel */
+}
+
+.blogDetail {
+  background: #f9f9f9; /* Màu nền nhẹ */
+  border: 1px solid #e0e0e0; /* Viền nhẹ */
+  border-radius: 8px; /* Góc bo tròn */
+  padding: 16px; /* Khoảng cách nội dung */
+  margin-bottom: 15px;
+}
+
+.image {
+  border-radius: 8px;
+  margin-top: 8px;
+}

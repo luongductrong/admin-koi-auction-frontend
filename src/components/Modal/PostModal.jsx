@@ -2,18 +2,26 @@ import React from 'react';
 import { Input, Upload, Modal } from 'antd';
 import { VerticalAlignTopOutlined } from '@ant-design/icons';
 
-const PostModal = ({ visible, onClose, onSubmit, text, setText, images, setImages }) => {
+const PostModal = ({ visible, onClose, onSubmit, title, setTitle, text, setText, images, setImages }) => {
   const handleImageUpload = ({ fileList }) => {
     setImages(fileList);
   };
 
   return (
     <Modal title="Create a new blog" open={visible} onOk={onSubmit} onCancel={onClose}>
+      {/* Title input */}
       <Input
-        placeholder="Write something . . ."
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        style={{ marginBottom: '16px' }}
+      />
+
+      <Input.TextArea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        style={{ marginBottom: '16px' }}
+        rows={4}
+        placeholder="Write your post content..."
       />
 
       <div>
