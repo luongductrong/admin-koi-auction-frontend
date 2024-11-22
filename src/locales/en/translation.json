@@ -234,6 +234,7 @@
       "status_Pending": "Pending",
       "status_Scheduled": "Scheduled",
       "status_Paid": "Paid",
+      "status_Finished": "Finished",
       "method_Ascending": "Ascending",
       "method_Descending": "Descending",
       "method_Fixed-price": "Fixed Price",

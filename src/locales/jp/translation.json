@@ -243,6 +243,7 @@
       "status_Pending": "処理中",
       "status_Scheduled": "予定",
       "status_Paid": "支払い済み",
+      "status_Finished": "完了",
       "method_Ascending": "価格昇順",
       "method_Descending": "価格降順",
       "method_Fixed-price": "固定価格",
