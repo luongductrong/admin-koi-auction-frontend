@@ -4,8 +4,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
 import { useTranslation } from 'react-i18next';
-
-const defaultImage = '/src/assets/defaultKoi.jpg';
+import defaultKoi from '../../assets/defaultKoi.jpg';
 
 const FishPopover = ({ fishIds, children }) => {
   const { t } = useTranslation();
@@ -71,12 +70,12 @@ const FishPopover = ({ fishIds, children }) => {
             src={fishData[currentIndex].mediaList[1].url}
             alt={fishData[currentIndex].koiName}
             className={styles.image}
-            onError={(e) => (e.target.src = defaultImage)}
+            onError={(e) => (e.target.src = defaultKoi)}
           />
         </div>
       ) : (
         <div className={styles.defaultImageContainer}>
-          <img src={defaultImage} alt="default koi" className={styles.image} />
+          <img src={defaultKoi} alt="default koi" className={styles.image} />
         </div>
       )}
 

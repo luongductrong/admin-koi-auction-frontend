@@ -107,16 +107,10 @@ const TransactionManagement = () => {
     {
       title: t('page.transactions.status'),
       dataIndex: 'status',
-      // render: (text) => {
-      //   t(`page.transactions.stauts_${text}`);
-      // },
     },
     {
       title: t('page.transactions.transaction_type'),
       dataIndex: 'transactionType',
-      // render: (text) => {
-      //   t(`page.transactions.type_${text}`);
-      // },
     },
   ];
 

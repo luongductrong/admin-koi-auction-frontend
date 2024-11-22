@@ -4,6 +4,10 @@ import { StarFilled } from '@ant-design/icons';
 import api from '../../configs';
 import styles from './index.module.scss';
 import { useTranslation } from 'react-i18next';
+import adminAvt from '../../assets/adminAvt.png';
+import staffAvt from '../../assets/staffAvt.png';
+import breederAvt from '../../assets/breederAvt.png';
+import DefaultAvt from '../../assets/avt.jpg';
 
 const UserPopover = ({ userId, children }) => {
   const { t } = useTranslation();
@@ -50,23 +54,23 @@ const UserPopover = ({ userId, children }) => {
     );
   };
 
-  const srcAvatar = (role) => {
+  const avt = (role) => {
     switch (role) {
       case 'Admin':
-        return '/src/assets/adminAvt.png';
+        return adminAvt;
       case 'Staff':
-        return '/src/assets/staffAvt.png';
+        return staffAvt;
       case 'Breeder':
-        return '/src/assets/breederAvt.png';
+        return breederAvt;
       default:
-        return '/src/assets/avt.jpg';
+        return DefaultAvt;
     }
   };
 
   const content = userData ? (
     <div className={styles['user-popover']}>
       <div className={styles['user-details']}>
-        <Avatar src={srcAvatar(userData.role)} size={64} className={styles.avatar} />
+        <Avatar src={avt(userData.role)} size={64} className={styles.avatar} />
         <div>
           <h3>{userData.fullName}</h3>
           {renderStars(userData.role)}
