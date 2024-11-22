@@ -7,6 +7,8 @@ import { addressApi } from '../../configs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import PasswordChangeDrawer from './../../components/PasswordChangeDrawer';
+import adminAvt from './../../assets/adminAvt.png';
+import staffAvt from './../../assets/staffAvt.png';
 
 const { Option } = Select;
 
@@ -184,11 +186,7 @@ const Profile = () => {
             <div className={styles.card}>
               <div className={styles.cardBody}>
                 <div className={styles.profileSection}>
-                  <img
-                    src={userDetails.role === 'Admin' ? 'src/assets/adminAvt.png' : 'src/assets/staffAvt.png'}
-                    alt="Avatar"
-                    className={styles.profileImage}
-                  />
+                  <img src={userDetails.role === 'Admin' ? adminAvt : staffAvt} className={styles.profileImage} />
                   <div className={styles.profileInfo}>
                     {userDetails.role === 'Admin' && (
                       <FontAwesomeIcon icon={faCheckCircle} className={styles.blueTick} />

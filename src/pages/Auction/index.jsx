@@ -139,6 +139,9 @@ const Auction = () => {
           case 'Paid':
             color = 'cyan';
             break;
+          case 'Finished':
+            color = 'purple';
+            break;
           case 'Pending':
             color = 'orange';
             break;

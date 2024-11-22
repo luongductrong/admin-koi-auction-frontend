@@ -8,6 +8,7 @@ import SocketService from '../../services/socket';
 import styles from './index.module.scss';
 import userStore from '../../zustand';
 import AutoCompleteComponent from '../../components/AutoComplete';
+import avt from '../../assets/avt.jpg';
 
 const { TextArea } = Input;
 
@@ -23,7 +24,6 @@ const Chat = () => {
   const [page, setPage] = useState(0);
   const messagesEndRef = useRef(null);
   const { user } = userStore();
-  const avtSrc = '/src/assets/avt.jpg';
 
   const [isNewMessage, setIsNewMessage] = useState(false);
 
@@ -174,7 +174,7 @@ const Chat = () => {
               className={styles.contactItem}
               onClick={() => setCurrChat({ receiverName: contact.fullName, receiverId: contact.id })}
             >
-              <img src={avtSrc} className={styles.contactAvatar} alt="Avatar" />
+              <img src={avt} className={styles.contactAvatar} alt="Avatar" />
               <div>
                 <h4>{contact.fullName.length == 0 ? t('page.chat.new_user') : contact.fullName}</h4>
                 <span>{t(`page.chat.role_${contact.role}`)}</span>
@@ -186,7 +186,7 @@ const Chat = () => {
 
       <div className={styles.chatSection}>
         <div className={styles.currentChatHeader}>
-          {currChat.receiverId && <img src={avtSrc} className={styles.avatar} alt="Avatar" />}
+          {currChat.receiverId && <img src={avt} className={styles.avatar} alt="Avatar" />}
 
           <h3 className={styles.receiverName}>{currChat.receiverName}</h3>
 
@@ -217,14 +217,14 @@ const Chat = () => {
                   message.senderId === user.userId ? styles.myMessage : styles.otherMessage
                 }`}
               >
-                {message.senderId !== user.userId && <img src={avtSrc} className={styles.avatar} alt="Avatar" />}
+                {message.senderId !== user.userId && <img src={avt} className={styles.avatar} alt="Avatar" />}
                 <div className={styles.messageContent}>
                   <div className={styles.messageText}>{message.message}</div>
                   <span className={styles.messageTime}>
                     {new Date(message.datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
-                {message.senderId === user.userId && <img src={avtSrc} className={styles.avatar} alt="Avatar" />}
+                {message.senderId === user.userId && <img src={avt} className={styles.avatar} alt="Avatar" />}
               </li>
             </React.Fragment>
           ))}
