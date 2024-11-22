@@ -262,6 +262,7 @@
       "role_User": "ユーザー",
       "role_Staff": "スタッフ",
       "role_Breeder": "ブリーダー",
+      "role_undefined": "",
       "status_Active": "アクティブ",
       "status_UnActive": "無効",
       "update": "更新",

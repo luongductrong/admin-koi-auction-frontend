@@ -273,6 +273,7 @@
       "role_User": "User",
       "role_Staff": "Staff",
       "role_Breeder": "Breeder",
+      "role_undefined": "",
       "status_Active": "Active",
       "status_UnActive": "UnActive",
       "update": "Update",

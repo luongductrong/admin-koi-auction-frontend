@@ -275,6 +275,7 @@
       "role_User": "Người dùng",
       "role_Staff": "Nhân viên",
       "role_Breeder": "Chủ trang trại",
+      "role_undefined": "",
       "status_Active": "Hoạt động",
       "status_UnActive": "Bị khóa",
       "update": "Cập nhật",
